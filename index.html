@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CRM Roselli Souza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf6;
+  --paper:#fffefb;
+  --paper-2:#fffaf1;
+  --ink:#382f22;
+  --muted:#807260;
+  --soft:#b5a78e;
+  --line:#eadfca;
+  --line-soft:#f2eadc;
+  --gold:#c8a453;
+  --gold-dark:#a98233;
+  --gold-light:#ead48d;
+  --green:#2f7c46;
+  --green-bg:#ecf8ef;
+  --red:#af553c;
+  --red-bg:#fff1ea;
+  --blue:#437f96;
+  --blue-bg:#eef8fa;
+  --violet:#7b6fb0;
+  --shadow:0 20px 70px -52px rgba(70,52,22,.48);
+  --shadow-soft:0 16px 48px -42px rgba(70,52,22,.35);
+  --radius-xl:32px;
+  --radius-lg:24px;
+  --radius-md:18px;
+  --radius-sm:12px;
+  --grad-gold:linear-gradient(135deg,#e5cd7d 0%,#c9a85a 52%,#a87f31 100%);
+  --focus:0 0 0 4px rgba(200,164,83,.22);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 85% -10%, rgba(231,205,126,.17), transparent 62%),
+    radial-gradient(780px 400px at -10% 15%, rgba(255,255,255,.86), transparent 70%),
+    linear-gradient(180deg,#fbfaf6 0%,#f8f4ec 100%);
+  font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+body.drawer-open,body.modal-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{border:0;cursor:pointer;background:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:none;box-shadow:var(--focus);border-color:var(--gold)!important;
+}
+.serif,h1,h2,h3{font-family:'Cormorant Garamond', Georgia, serif}
+.app-shell{max-width:1480px;margin:0 auto;padding:24px clamp(18px,3vw,38px) 72px}
+
+/* Header */
+.topbar{
+  position:sticky;top:16px;z-index:30;
+  min-height:78px;
+  display:flex;align-items:center;gap:24px;
+  padding:13px 14px 13px 18px;
+  border:1px solid rgba(234,223,202,.92);
+  border-radius:28px;
+  background:rgba(255,254,251,.88);
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+}
+.brand{display:flex;align-items:center;gap:13px;min-width:300px}
+.mark{
+  width:48px;height:48px;border-radius:18px;
+  display:grid;place-items:center;
+  border:1px solid var(--line);
+  color:var(--gold-dark);
+  background:linear-gradient(145deg,#fffefb,#f9efd8);
+  font-family:'Cormorant Garamond',serif;
+  font-size:27px;font-weight:700;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.86);
+}
+.brand-name{font-family:'Cormorant Garamond',serif;color:var(--gold-dark);font-size:21px;letter-spacing:.31em;line-height:1;white-space:nowrap}
+.brand-sub{font-size:9.5px;letter-spacing:.29em;color:var(--muted);text-transform:uppercase;margin-top:7px;white-space:nowrap}
+.nav-wrap{flex:1;min-width:0;display:flex;justify-content:center}
+.nav{display:flex;align-items:center;gap:5px;min-width:0}
+.nav-btn{
+  color:var(--muted);
+  border-radius:999px;
+  padding:12px 15px;
+  font-size:14px;font-weight:750;letter-spacing:-.01em;
+  transition:.18s ease;white-space:nowrap;
+}
+.nav-btn:hover{background:#fbf5e8;color:var(--ink)}
+.nav-btn.active{background:var(--ink);color:#fff;box-shadow:0 13px 28px -22px rgba(56,47,34,.9)}
+.actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex:0 0 auto}
+.avatar-btn{
+  width:48px;height:48px;border-radius:17px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  display:grid;place-items:center;
+  transition:.18s ease;
+}
+.avatar-dot{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:var(--grad-gold);color:#fff;font-weight:900;font-size:11px;letter-spacing:.04em;
+}
+.avatar-btn:hover,.menu-toggle:hover{transform:translateY(-1px);background:#fbf5e8}
+.menu-toggle{
+  height:48px;padding:0 17px;border-radius:17px;border:1px solid var(--line);
+  color:var(--gold-dark);font-weight:800;background:var(--paper);
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:46px;
+  padding:12px 18px;border-radius:16px;
+  font-weight:800;letter-spacing:-.01em;
+  background:var(--grad-gold);color:white;
+  box-shadow:0 13px 30px -22px rgba(169,130,54,.88);
+  transition:.18s ease;
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.02)}
+.btn.secondary{background:rgba(255,254,251,.72);color:var(--gold-dark);border:1px solid var(--line);box-shadow:none}
+.btn.soft{background:#f8f1e5;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn.green{background:#e9f7ec;color:var(--green);border:1px solid #cce8d2;box-shadow:none}
+.btn.red{background:var(--red-bg);color:var(--red);border:1px solid #efcfbf;box-shadow:none}
+.btn.dark{background:var(--ink);color:#fff;box-shadow:0 13px 34px -22px rgba(56,47,34,.7)}
+.btn.small{min-height:38px;padding:9px 13px;border-radius:13px;font-size:13px}
+
+/* Drawer */
+.drawer-backdrop{position:fixed;inset:0;background:rgba(56,47,34,.24);backdrop-filter:blur(5px);z-index:70;opacity:0;pointer-events:none;transition:.22s ease}
+.drawer{
+  position:fixed;top:0;right:0;height:100vh;width:min(420px,94vw);z-index:80;
+  background:#fffefb;border-left:1px solid var(--line);
+  box-shadow:-30px 0 90px -55px rgba(56,47,34,.82);
+  transform:translateX(106%);transition:.25s ease;
+  padding:26px;display:flex;flex-direction:column;
+}
+.drawer.open{transform:translateX(0)}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.drawer-profile{display:flex;align-items:center;gap:13px;margin-bottom:16px}
+.drawer-profile .avatar-dot{width:45px;height:45px;font-size:12px}
+.drawer-head h3{font-size:34px;margin:0;line-height:1;color:var(--ink)}
+.drawer-head p{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.4}
+.icon-close{width:42px;height:42px;border-radius:14px;background:#fbf5e9;color:var(--muted);font-size:25px;border:1px solid var(--line)}
+.drawer-list{display:grid;gap:10px;margin-top:22px}
+.drawer-item{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:17px;border:1px solid var(--line);border-radius:18px;
+  background:#fffaf1;color:var(--ink);text-align:left;transition:.16s ease;
+}
+.drawer-item:hover{transform:translateX(-2px);background:#fff5e4;border-color:#ddc990}
+.drawer-item strong{font-size:15px;display:block}.drawer-item span span{font-size:12.5px;color:var(--muted);display:block;margin-top:4px;line-height:1.35}.chev{color:var(--gold-dark);font-weight:900}
+.drawer-foot{margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
+.secure-note{padding:14px;border-radius:18px;background:#f9f2e7;border:1px solid var(--line);color:var(--muted);font-size:13px;line-height:1.45}
+
+/* Pages */
+.view{padding-top:38px}
+.page{display:none;animation:rise .24s ease}.page.active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 4px 32px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.22em;font-weight:900;color:var(--gold-dark);margin-bottom:13px}
+h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;color:var(--ink);letter-spacing:-.045em}
+.page-head p{max-width:760px;font-size:16.5px;color:var(--muted);line-height:1.75;margin:18px 0 0}
+.header-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.grid{display:grid;gap:20px}.grid.kpis{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:24px}.grid.two{grid-template-columns:1.45fr 1fr;align-items:start}.grid.equal{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{
+  background:rgba(255,254,251,.82);
+  border:1px solid rgba(234,223,202,.92);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-soft);
+  overflow:hidden;
+}
+.card.flat{box-shadow:none}.card.pad{padding:24px}.card.air{padding:28px}
+.card-head{padding:24px 28px;border-bottom:1px solid var(--line-soft);display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.card-head h2,.card-head h3{margin:0;font-size:34px;line-height:.98;color:var(--ink);font-weight:600;letter-spacing:-.02em}.card-head p{margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.5}.card-body{padding:24px 28px}
+.kpi{
+  min-height:160px;display:flex;flex-direction:column;justify-content:space-between;
+  padding:24px;border-radius:var(--radius-lg);border:1px solid var(--line);
+  background:rgba(255,254,251,.88);box-shadow:var(--shadow-soft);
+}
+.kpi .label{font-size:11px;font-weight:900;letter-spacing:.20em;text-transform:uppercase;color:var(--muted)}
+.kpi .value{font-family:'Cormorant Garamond',serif;font-size:58px;line-height:.88;color:var(--gold-dark);font-weight:600;letter-spacing:-.045em;margin-top:18px}.kpi.money .value{font-size:50px}.kpi .hint{color:var(--muted);font-size:13.5px;line-height:1.45;margin-top:12px}.kpi.primary{background:linear-gradient(145deg,#fffefb 0%,#fff6df 100%);border-color:#ddc88e}.kpi.alert{border-color:#f1cbbb;background:linear-gradient(145deg,#fffefb 0%,#fff4ed 100%)}
+
+/* Decision strip */
+.decision-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:22px}
+.decision{
+  border:1px solid var(--line);border-radius:22px;background:rgba(255,254,251,.9);padding:18px;
+  display:grid;gap:8px;min-height:118px;
+}
+.decision strong{font-size:15px;line-height:1.25}.decision span{font-size:13px;color:var(--muted);line-height:1.45}.decision .pill{justify-self:start}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:11px;font-weight:900;letter-spacing:.03em;text-transform:uppercase;color:var(--gold-dark);background:#fbf5e8}.pill.green{color:var(--green);background:var(--green-bg);border-color:#cce8d2}.pill.red{color:var(--red);background:var(--red-bg);border-color:#edcbbb}.pill.blue{color:var(--blue);background:var(--blue-bg);border-color:#d6edf2}.pill.dark{color:#fff;background:var(--ink);border-color:var(--ink)}
+
+/* Lists */
+.patient-list{display:grid;gap:13px}.patient-row{
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  padding:17px;border:1px solid var(--line);border-radius:22px;background:#fffefb;
+  transition:.16s ease;
+}
+.patient-row:hover{border-color:#ddc88e;box-shadow:0 16px 38px -34px rgba(70,52,22,.55);transform:translateY(-1px)}
+.avatar{width:48px;height:48px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#ead996,#d4b461);color:#fff;font-weight:900;font-size:12px;letter-spacing:.05em;flex:0 0 auto}.avatar.round{border-radius:50%}.patient-main strong{font-size:16px;display:block;line-height:1.2}.patient-main .meta{margin-top:6px;color:var(--muted);font-size:13.3px;line-height:1.45}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.tag{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:999px;font-size:10.5px;font-weight:850;background:#f8f1e5;color:var(--gold-dark);border:1px solid #eddcb6;white-space:nowrap}.tag.red{background:var(--red-bg);border-color:#f1cfbf;color:var(--red)}.tag.green{background:var(--green-bg);border-color:#d3ebd6;color:var(--green)}.tag.blue{background:var(--blue-bg);border-color:#d4eaf0;color:var(--blue)}.tag.dark{background:var(--ink);border-color:var(--ink);color:#fff}.tag.violet{background:#f3f0ff;border-color:#ddd6fb;color:var(--violet)}
+.row-actions{display:flex;flex-direction:column;gap:8px;min-width:138px}.mini-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.mini-box{border:1px solid var(--line);border-radius:18px;padding:15px;background:#fffefb}.mini-box strong{font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--gold-dark);line-height:.9;font-weight:600}.mini-box span{display:block;margin-top:8px;color:var(--muted);font-size:12.5px;line-height:1.35}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 0;border-bottom:1px solid var(--line-soft)}.toggle-row:last-child{border-bottom:0}.toggle-row strong{display:block;font-size:14.5px}.toggle-row span{display:block;color:var(--muted);font-size:12.8px;margin-top:4px;line-height:1.35}
+.progress-list{display:grid;gap:16px}.progress-row{display:grid;grid-template-columns:136px 1fr 56px;gap:16px;align-items:center;font-weight:800}.progress-row span:first-child{font-size:13.5px}.progress-row span:last-child{text-align:right;color:var(--gold-dark);font-size:14px}.bar{height:10px;border-radius:999px;background:#efe6d5;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px;background:var(--grad-gold)}
+
+/* Agenda */
+.timeline{display:grid;gap:13px}.appointment{display:grid;grid-template-columns:78px 1fr auto;gap:17px;align-items:center;padding:17px;border:1px solid var(--line);border-radius:22px;background:#fffefb}.time{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold-dark);font-weight:700;line-height:1;text-align:center;background:#fbf5e9;border:1px solid var(--line);border-radius:17px;padding:13px 7px}.appointment strong{font-size:16px;display:block}.appointment p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.status{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap;border:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}.status.ok{background:var(--green-bg);color:var(--green);border-color:#cfebd4}.status.wait{background:#fff7e7;color:#9a7526;border-color:#ebd9a4}.status.danger{background:var(--red-bg);color:var(--red);border-color:#f0d0c2}.status.blue{background:var(--blue-bg);color:var(--blue);border-color:#d5edf3}
+
+/* Forms */
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--muted);margin:0 0 8px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:15px;background:#fffefb;color:var(--ink);padding:13px 14px;min-height:48px}.field textarea{min-height:112px;resize:vertical;line-height:1.55}.field input::placeholder,.field textarea::placeholder{color:#aa9a81}.search-row{display:grid;grid-template-columns:1.2fr .8fr auto;gap:14px;align-items:end;margin-bottom:18px}.switch{width:54px;height:30px;border-radius:999px;padding:3px;background:var(--grad-gold);display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto}.switch.off{background:#ddd3c4;justify-content:flex-start}.switch i{width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15)}.config-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.config-tab{padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:#fffefb;color:var(--muted);font-weight:900;font-size:13px}.config-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.config-panel{display:none}.config-panel.active{display:block}.procedure-editor{display:grid;gap:12px}.procedure-item{display:grid;grid-template-columns:1.2fr .8fr .65fr .7fr auto;gap:11px;align-items:end;padding:14px;border:1px solid var(--line);border-radius:18px;background:#fffefb}.procedure-item .field label{font-size:10px;margin-bottom:6px}.procedure-item input,.procedure-item select{min-height:42px;padding:10px 12px;border-radius:13px}
+
+/* Reports */
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}.donut{width:172px;height:172px;border-radius:50%;background:conic-gradient(var(--gold) 0 68%, #6d8a5a 68% 86%, #b95b39 86% 100%);position:relative;flex:0 0 auto}.donut:after{content:"";position:absolute;inset:27px;background:var(--paper);border-radius:50%;border:1px solid var(--line)}.donut strong{position:absolute;inset:0;display:grid;place-items:center;z-index:1;font-family:'Cormorant Garamond',serif;font-size:44px;color:var(--gold-dark)}.legend{display:grid;gap:12px;color:var(--muted);font-size:14px}.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:8px;background:var(--gold)}.dot.green{background:#6d8a5a}.dot.red{background:#b95b39}.insight-list{display:grid;gap:10px}.insight{padding:15px;border-radius:17px;border:1px solid var(--line);background:#fffefb;display:flex;gap:12px;align-items:flex-start}.insight b{display:grid;place-items:center;flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#fbf2df;color:var(--gold-dark);font-size:13px}.insight strong{display:block;font-size:14.5px}.insight span{display:block;color:var(--muted);font-size:12.8px;line-height:1.45;margin-top:4px}
+
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;z-index:100;background:rgba(56,47,34,.25);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:22px}.modal-backdrop.open{display:flex}.modal{width:min(980px,96vw);max-height:90vh;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:30px;background:#fffefb;box-shadow:0 30px 100px -50px rgba(56,47,34,.82);overflow:hidden}.modal-header{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;padding:25px 30px;border-bottom:1px solid var(--line)}.modal-header h3{margin:0;font-size:36px;line-height:.98}.modal-header p{margin:8px 0 0;color:var(--muted);font-size:14px}.modal-body{padding:24px 30px;overflow:auto}.modal-footer{display:flex;justify-content:flex-end;gap:10px;padding:18px 30px;border-top:1px solid var(--line);background:#fffaf1}.modal-section{padding:20px;border:1px solid var(--line);border-radius:22px;background:#fffefb;margin-bottom:16px}.modal-section h4{margin:0 0 14px;font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1}.history-grid{display:grid;gap:10px}.history-item{display:grid;grid-template-columns:1fr auto;gap:14px;border:1px solid var(--line);border-radius:17px;padding:14px;background:#fffefb}.history-item strong{display:block}.history-item span{color:var(--muted);font-size:13px}.attachment-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.attachment{border:1px dashed #ddc990;border-radius:17px;padding:14px;background:#fffaf1;color:var(--muted);font-size:13px;min-height:80px;display:flex;flex-direction:column;justify-content:space-between}.attachment strong{color:var(--ink)}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:white;padding:13px 19px;border-radius:14px;z-index:120;box-shadow:var(--shadow);font-weight:800;display:none}.toast.show{display:block;animation:rise .2s ease}
+
+@media(max-width:1180px){
+  .topbar{align-items:flex-start;flex-wrap:wrap}.brand{min-width:250px}.brand-name{font-size:19px}.nav-wrap{order:3;flex-basis:100%;justify-content:flex-start;overflow:auto;padding-top:2px}.grid.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.two,.grid.equal,.decision-strip{grid-template-columns:1fr}.procedure-item{grid-template-columns:1fr 1fr}.procedure-item .btn{grid-column:1/-1}.search-row{grid-template-columns:1fr 1fr}.search-row .btn{grid-column:1/-1}.mini-metrics{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:720px){
+  .app-shell{padding:14px 12px 56px}.topbar{top:8px;border-radius:22px;padding:12px}.brand{min-width:0}.brand-name{font-size:16px;letter-spacing:.18em}.brand-sub{display:none}.mark{width:46px;height:46px}.nav{gap:5px}.nav-btn{padding:10px 12px;font-size:12.5px}.menu-toggle{display:none}.page-head{align-items:flex-start;flex-direction:column;margin-bottom:24px}h1{font-size:47px}.page-head p{font-size:15px}.grid.kpis,.grid.three,.form-grid,.form-grid.three,.search-row,.mini-metrics,.attachment-grid{grid-template-columns:1fr}.card-head{padding:20px;flex-direction:column}.card-body{padding:20px}.patient-row,.appointment{grid-template-columns:1fr;text-align:left}.patient-row .avatar{display:none}.row-actions{flex-direction:row;min-width:0;flex-wrap:wrap}.row-actions .btn{flex:1}.progress-row{grid-template-columns:1fr;gap:7px}.progress-row span:last-child{text-align:left}.modal-backdrop{align-items:flex-end;padding:0}.modal{width:100vw;max-height:94vh;border-radius:26px 26px 0 0}.modal-footer{position:sticky;bottom:0;flex-wrap:wrap}.modal-footer .btn{flex:1}.drawer{width:96vw}.avatar-btn{width:46px;height:46px}.actions{margin-left:auto}.brand div:nth-child(2){min-width:0}.header-tools{justify-content:flex-start}.procedure-item{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="#" onclick="go('overview'); return false" aria-label="Início do CRM Roselli Souza">
+      <div class="mark">RS</div>
+      <div>
+        <div class="brand-name">ROSELLI SOUZA</div>
+        <div class="brand-sub">clínica estética premium</div>
+      </div>
+    </a>
+
+    <div class="nav-wrap">
+      <nav class="nav" aria-label="Navegação principal">
+        <button class="nav-btn active" data-view="overview" onclick="go('overview')">Visão</button>
+        <button class="nav-btn" data-view="agenda" onclick="go('agenda')">Agenda de hoje</button>
+        <button class="nav-btn" data-view="returns" onclick="go('returns')">Retornos</button>
+        <button class="nav-btn" data-view="patients" onclick="go('patients')">Pacientes</button>
+        <button class="nav-btn" data-view="reports" onclick="go('reports')">Relatórios</button>
+      </nav>
+    </div>
+
+    <div class="actions">
+      <button class="menu-toggle" onclick="toggleDrawer(true)">Menu</button>
+      <button class="avatar-btn" onclick="toggleDrawer(true)" aria-label="Abrir menu administrativo"><span class="avatar-dot">DR</span></button>
+    </div>
+  </header>
+
+  <main class="view">
+    <section id="overview" class="page active">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">painel de decisão</div>
+          <h1>Visão da Roseli</h1>
+          <p>Uma tela para decidir rápido: quem precisa voltar, o que está pendente hoje, quais pacientes merecem atenção clínica e onde existe receita parada.</p>
+        </div>
+        <div class="header-tools">
+          <button class="btn" onclick="go('agenda')">Ver agenda</button>
+          <button class="btn secondary" onclick="go('returns')">Abrir retornos</button>
+        </div>
+      </div>
+
+      <div class="decision-strip">
+        <article class="decision"><span class="pill red">ação da Roseli</span><strong>3 pacientes precisam de análise antes do contato.</strong><span>Histórico sensível, observação clínica ou retorno com abordagem mais cuidadosa.</span></article>
+        <article class="decision"><span class="pill green">receita possível</span><strong>R$ 18,9k em retornos vencidos nesta semana.</strong><span>Priorizar pacientes VIP e procedimentos com ticket acima de R$ 1.000.</span></article>
+        <article class="decision"><span class="pill blue">agenda de hoje</span><strong>1 termo pendente antes do procedimento.</strong><span>Laura Mesquita deve assinar o termo antes do preenchimento labial.</span></article>
+      </div>
+
+      <div class="grid kpis">
+        <article class="kpi primary"><div><div class="label">pacientes</div><div class="value" id="kpiPac">—</div></div><div class="hint">Prontuários cadastrados.</div></article>
+        <article class="kpi"><div><div class="label">com telefone</div><div class="value" id="kpiTel">—</div></div><div class="hint">Contato disponível para WhatsApp.</div></article>
+        <article class="kpi"><div><div class="label">procedimentos</div><div class="value" id="kpiProc">—</div></div><div class="hint">Linhas de histórico registradas.</div></article>
+        <article class="kpi alert"><div><div class="label">leitura incerta</div><div class="value" id="kpiLc">—</div></div><div class="hint">Transcrições a revisar.</div></article>
+      </div>
+
+      <div class="grid two">
+        <section class="card">
+          <div class="card-head">
+            <div><h2>Prioridade da Roseli</h2><p>Pacientes que merecem análise antes da secretária fazer o contato.</p></div>
+            <button class="btn secondary small" onclick="go('returns')">Ver todos</button>
+          </div>
+          <div class="card-body patient-list" id="doctorPriority"></div>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <div class="card-head"><div><h3>Procedimentos em movimento</h3><p>Continuidade de tratamento por volume.</p></div></div>
+            <div class="card-body progress-list" id="procMovement">
+              <div class="progress-row"><span>Botox</span><div class="bar"><i style="width:88%"></i></div><span>14</span></div>
+              <div class="progress-row"><span>Skinbooster</span><div class="bar"><i style="width:68%"></i></div><span>9</span></div>
+              <div class="progress-row"><span>PDRN</span><div class="bar"><i style="width:54%"></i></div><span>7</span></div>
+              <div class="progress-row"><span>Tirzepatida</span><div class="bar"><i style="width:42%"></i></div><span>6</span></div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-head"><div><h3>Resumo do dia</h3><p>Sem garimpar tela.</p></div><button class="btn secondary small" onclick="go('agenda')">Abrir</button></div>
+            <div class="card-body">
+              <div class="mini-metrics">
+                <div class="mini-box"><strong>6</strong><span>confirmadas</span></div>
+                <div class="mini-box"><strong>3</strong><span>pendências</span></div>
+                <div class="mini-box"><strong>1</strong><span>termo pendente</span></div>
+              </div>
+              <div style="margin-top:16px">
+                <div class="toggle-row"><div><strong>09:00 Marina Albuquerque</strong><span>Botox completo, paciente VIP.</span></div><span class="status ok">ok</span></div>
+                <div class="toggle-row"><div><strong>11:30 Laura Mesquita</strong><span>Preenchimento com termo pendente.</span></div><span class="status danger">termo</span></div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <section id="agenda" class="page">
+      <div class="page-head">
+        <div><div class="eyebrow">rotina da clínica</div><h1>Agenda de hoje</h1><p>O dia inteiro em uma tela única: horário, paciente, status, pendência, ficha e WhatsApp. Menos abas, menos caça ao tesouro.</p></div>
+        <div class="header-tools"><button class="btn">Novo agendamento</button><button class="btn secondary">Exportar dia</button></div>
+      </div>
+      <div class="grid equal">
+        <section class="card">
+          <div class="card-head"><div><h2>Timeline do dia</h2><p>Fluxo com confirmação e ação rápida.</p></div></div>
+          <div class="card-body timeline" id="agendaList"></div>
+        </section>
+        <section class="grid">
+          <article class="card">
+            <div class="card-head"><div><h2>Resumo operacional</h2><p>O que a equipe precisa resolver.</p></div></div>
+            <div class="card-body grid">
+              <div class="mini-metrics">
+                <div class="mini-box"><strong>6</strong><span>confirmadas</span></div>
+                <div class="mini-box"><strong>3</strong><span>pendências</span></div>
+                <div class="mini-box"><strong>R$ 5,7k</strong><span>receita prevista</span></div>
+              </div>
+              <div class="insight-list">
+                <div class="insight"><b>1</b><div><strong>Termo antes do atendimento</strong><span>Laura Mesquita não deve seguir para sala sem assinatura.</span></div></div>
+                <div class="insight"><b>2</b><div><strong>Paciente VIP na primeira agenda</strong><span>Marina pode receber plano de manutenção com abordagem leve.</span></div></div>
+                <div class="insight"><b>3</b><div><strong>Retorno de avaliação às 15h</strong><span>Fernanda precisa de fotos comparativas no histórico.</span></div></div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <section id="returns" class="page">
+      <div class="page-head">
+        <div><div class="eyebrow">ação da secretária</div><h1>Retornos</h1><p>Lista prática para contato: quem chamar, por qual procedimento, quantos dias venceu, valor anterior, tentativa e próxima ação.</p></div>
+        <div class="header-tools"><button class="btn green">Enviar lote WhatsApp</button><button class="btn secondary">Filtrar</button></div>
+      </div>
+      <div class="grid kpis">
+        <article class="kpi primary"><div><div class="label">vencidas</div><div class="value">18</div></div><div class="hint">Prioridade operacional.</div></article>
+        <article class="kpi"><div><div class="label">sem resposta</div><div class="value">11</div></div><div class="hint">Precisam segunda tentativa.</div></article>
+        <article class="kpi"><div><div class="label">agendaram</div><div class="value">6</div></div><div class="hint">Conversão registrada ontem.</div></article>
+        <article class="kpi money"><div><div class="label">potencial leve</div><div class="value">R$ 18,9k</div></div><div class="hint">Estimativa por histórico anterior.</div></article>
+      </div>
+      <section class="card">
+        <div class="card-head"><div><h2>Para chamar agora</h2><p>Ordenado por atraso, valor anterior e perfil da paciente.</p></div></div>
+        <div class="card-body patient-list" id="returnList"></div>
+      </section>
+    </section>
+
+    <section id="patients" class="page">
+      <div class="page-head">
+        <div><div class="eyebrow">histórico vivo</div><h1>Pacientes</h1><p>Ficha completa com procedimentos, valores, preferências, restrições, fotos, termos, assinatura e status de retorno.</p></div>
+        <div class="header-tools"><button class="btn" onclick="novoPaciente()">Nova paciente</button><button class="btn secondary" onclick="importLocalBackup()">Importar backup</button></div>
+      </div>
+      <section class="card">
+        <div class="card-body">
+          <div class="search-row">
+            <div class="field"><label>Buscar paciente</label><input id="patientSearch" placeholder="Nome, WhatsApp ou procedimento" oninput="renderPatientList()"></div>
+            <div class="field"><label>Filtro rápido</label><select id="patientFilter" onchange="renderPatientList()"><option value="Todas">Todas</option><option value="Retorno vencido">Retorno vencido</option><option value="VIP">VIP</option><option value="Atenção clínica">Atenção clínica</option></select></div>
+            <button class="btn secondary" onclick="toast('Busca atualizada')">Buscar</button>
+          </div>
+          <div class="meta" id="patientCount" style="margin:2px 2px 12px;color:var(--muted);font-size:14px"></div>
+<div class="patient-list" id="patientList"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="page-head">
+        <div><div class="eyebrow">decisão da clínica</div><h1>Relatórios</h1><p>Menos número solto, mais decisão: receita, conversão, procedimentos que sustentam o caixa e gargalos de retorno.</p></div>
+        <div class="header-tools"><button class="btn secondary">Últimos 30 dias</button><button class="btn">Exportar relatório</button></div>
+      </div>
+      <div class="decision-strip">
+        <article class="decision"><span class="pill green">oportunidade</span><strong>Botox lidera receita e também retorno vencido.</strong><span>Criar campanha de manutenção para pacientes com aplicação acima de 150 dias.</span></article>
+        <article class="decision"><span class="pill red">gargalo</span><strong>31 pacientes estão há muito tempo sem contato.</strong><span>Separar por ticket anterior antes de disparar mensagem genérica.</span></article>
+        <article class="decision"><span class="pill blue">equipe</span><strong>68% dos contatos geraram resposta ou agenda.</strong><span>Boa conversão, mas os sem resposta precisam segunda tentativa organizada.</span></article>
+      </div>
+      <div class="grid kpis">
+        <article class="kpi money primary"><div><div class="label">registrado no mês</div><div class="value">R$ 42k</div></div><div class="hint">Atendimentos lançados no CRM.</div></article>
+        <article class="kpi"><div><div class="label">conversão</div><div class="value">68%</div></div><div class="hint">Responderam ou agendaram.</div></article>
+        <article class="kpi"><div><div class="label">ticket médio</div><div class="value">R$ 1k</div></div><div class="hint">Média por atendimento registrado.</div></article>
+        <article class="kpi alert"><div><div class="label">alertas</div><div class="value">31</div></div><div class="hint">Sem contato há longo período.</div></article>
+      </div>
+      <div class="grid equal">
+        <section class="card">
+          <div class="card-head"><div><h2>Conversão de contatos</h2><p>Últimos 30 dias.</p></div></div>
+          <div class="card-body"><div class="donut-wrap"><div class="donut"><strong>68%</strong></div><div class="legend"><span><i class="dot"></i>Contatos respondidos</span><span><i class="dot green"></i>Agendamentos confirmados</span><span><i class="dot red"></i>Sem resposta</span></div></div></div>
+        </section>
+        <section class="card">
+          <div class="card-head"><div><h2>Procedimentos mais realizados</h2><p>Contagem aproximada nos prontuários.</p></div></div>
+          <div class="card-body progress-list" id="procReport">
+            <div class="progress-row"><span>Botox</span><div class="bar"><i style="width:92%"></i></div><span>R$ 31k</span></div>
+            <div class="progress-row"><span>Bioestimulador</span><div class="bar"><i style="width:78%"></i></div><span>R$ 26k</span></div>
+            <div class="progress-row"><span>Preenchimento</span><div class="bar"><i style="width:69%"></i></div><span>R$ 22k</span></div>
+            <div class="progress-row"><span>Skinbooster</span><div class="bar"><i style="width:44%"></i></div><span>R$ 12k</span></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="page-head">
+        <div><div class="eyebrow">menu administrativo</div><h1>Configurações</h1><p>O que não é rotina fica escondido aqui: clínica, procedimentos, mensagens, usuários, permissões, backup e segurança.</p></div>
+        <div class="header-tools"><button class="btn" onclick="saveMock()">Salvar alterações</button><button class="btn secondary" onclick="toggleDrawer(true)">Abrir menu</button></div>
+      </div>
+      <div class="config-tabs" role="tablist">
+        <button class="config-tab active" onclick="configTab('clinic',this)">Clínica</button>
+        <button class="config-tab" onclick="configTab('procedures',this)">Procedimentos</button>
+        <button class="config-tab" onclick="configTab('messages',this)">Mensagens</button>
+        <button class="config-tab" onclick="configTab('schedule',this)">Agenda</button>
+        <button class="config-tab" onclick="configTab('users',this)">Usuários</button>
+        <button class="config-tab" onclick="configTab('security',this)">Segurança</button>
+      </div>
+      <section class="config-panel active" id="cfg-clinic">
+        <div class="grid equal">
+          <article class="card"><div class="card-head"><div><h2>Dados da clínica</h2><p>Tudo editável pela Roseli/admin.</p></div></div><div class="card-body form-grid">
+            <div class="field"><label>Nome da clínica</label><input value="Roselli Souza"></div>
+            <div class="field"><label>Profissional principal</label><input value="Dra. Roselli Souza"></div>
+            <div class="field"><label>WhatsApp principal</label><input value="69 99999-9999"></div>
+            <div class="field"><label>Endereço</label><input value="Porto Velho, RO"></div>
+            <div class="field" style="grid-column:1/-1"><label>Descrição interna</label><textarea>Atendimento premium com prioridade para continuidade dos protocolos e retornos de manutenção.</textarea></div>
+          </div></article>
+          <article class="card"><div class="card-head"><div><h2>Identidade visual</h2><p>Controle do que aparece na interface.</p></div></div><div class="card-body">
+            <div class="toggle-row"><div><strong>Marca reduzida no topo</strong><span>Header mais limpo, sem card administrativo pesado.</span></div><span class="switch"><i></i></span></div>
+            <div class="toggle-row"><div><strong>Dourado só em ações principais</strong><span>Evita excesso visual e deixa o luxo mais silencioso.</span></div><span class="switch"><i></i></span></div>
+            <div class="toggle-row"><div><strong>Modo branco premium</strong><span>Mais espaço em branco e menos bloco bege.</span></div><span class="switch"><i></i></span></div>
+          </div></article>
+        </div>
+      </section>
+      <section class="config-panel" id="cfg-procedures"><article class="card"><div class="card-head"><div><h2>Procedimentos editáveis</h2><p>Nome, categoria, intervalo, valor e status podem ser alterados sem código.</p></div><button class="btn small">Adicionar</button></div><div class="card-body procedure-editor" id="procedureEditor"></div></article></section>
+      <section class="config-panel" id="cfg-messages"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Mensagem padrão</h2><p>Texto que abre no WhatsApp.</p></div></div><div class="card-body"><div class="field"><label>Mensagem geral</label><textarea>Olá, {primeiro_nome}! Aqui é da clínica Roselli Souza. Vi que já faz um tempinho desde seu procedimento de {procedimento}. Quer que eu veja um horário para você?</textarea></div></div></article><article class="card"><div class="card-head"><div><h2>Tom por perfil</h2><p>Evita mensagem robótica.</p></div></div><div class="card-body"><div class="toggle-row"><div><strong>Paciente VIP</strong><span>Mais pessoal e menos promocional.</span></div><span class="switch"><i></i></span></div><div class="toggle-row"><div><strong>Retorno vencido</strong><span>Mensagem mais objetiva.</span></div><span class="switch"><i></i></span></div><div class="toggle-row"><div><strong>Atenção clínica</strong><span>Exige revisão da Roseli antes do envio.</span></div><span class="switch"><i></i></span></div></div></article></div></section>
+      <section class="config-panel" id="cfg-schedule"><article class="card"><div class="card-head"><div><h2>Agenda e operação</h2><p>Configurações da aba Agenda de hoje.</p></div></div><div class="card-body form-grid three"><div class="field"><label>Horário inicial</label><input type="time" value="08:00"></div><div class="field"><label>Horário final</label><input type="time" value="18:00"></div><div class="field"><label>Duração padrão</label><input value="60 minutos"></div><div class="field"><label>Confirmação</label><select><option>Manual pela secretária</option><option>Automática futura</option></select></div><div class="field"><label>Encaixe</label><select><option>Permitido com autorização</option><option>Bloqueado</option></select></div><div class="field"><label>Lembrete</label><input value="1 dia antes"></div></div></article></section>
+      <section class="config-panel" id="cfg-users"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Usuários</h2><p>Perfis de acesso.</p></div><button class="btn small">Adicionar</button></div><div class="card-body"><div class="toggle-row"><div><strong>Dra. Roselli</strong><span>Admin, edição total, financeiro visível.</span></div><span class="status ok">ativa</span></div><div class="toggle-row"><div><strong>Secretária</strong><span>Operação, contatos e agenda. Sem financeiro por padrão.</span></div><span class="status ok">ativa</span></div></div></article><article class="card"><div class="card-head"><div><h2>Permissões</h2><p>Controle fino por perfil.</p></div></div><div class="card-body"><div class="toggle-row"><div><strong>Secretária vê financeiro</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Secretária exclui paciente</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Roseli edita tudo</strong><span>Obrigatório.</span></div><span class="switch"><i></i></span></div></div></article></div></section>
+      <section class="config-panel" id="cfg-security"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Segurança</h2><p>Acesso e proteção de dados.</p></div></div><div class="card-body form-grid"><div class="field"><label>Usuário admin</label><input value="dra.roselli"></div><div class="field"><label>Alterar senha</label><input type="password" placeholder="Nova senha"></div><div class="field"><label>Bloqueio</label><select><option>30 minutos</option><option>1 hora</option></select></div><div class="field"><label>Auditoria</label><select><option>Ativa</option><option>Desativada</option></select></div></div></article><article class="card"><div class="card-head"><div><h2>Backup e dados</h2><p>Preparado para LGPD e operação segura.</p></div></div><div class="card-body grid"><button class="btn secondary" onclick="configureSheetsSync()">Configurar Sheets</button><button class="btn secondary" onclick="syncSheetsNow()">Sincronizar agora</button><button class="btn secondary" onclick="exportPatientsCsv()">Exportar pacientes</button><button class="btn secondary" onclick="exportHistoryCsv()">Exportar histórico</button><button class="btn secondary" onclick="exportLocalBackup()">Gerar backup</button><button class="btn red" onclick="clearLocalMemory()">Limpar memória local</button></div></article></div></section>
+    </section>
+  </main>
+</div>
+
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer(false)"></div>
+<aside class="drawer" id="drawer" aria-label="Menu administrativo">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-profile"><span class="avatar-dot">DR</span><div><strong>Dra. Roselli</strong><p>Admin, edição total</p></div></div>
+      <h3>Menu</h3>
+      <p>Configurações, segurança e administração fora da navegação principal.</p>
+    </div>
+    <button class="icon-close" onclick="toggleDrawer(false)" aria-label="Fechar menu">×</button>
+  </div>
+  <div class="drawer-list">
+    <button class="drawer-item" onclick="drawerGo('settings','clinic')"><span><strong>Configurações da clínica</strong><span>Marca, identidade visual e dados principais.</span></span><span class="chev">›</span></button>
+    <button class="drawer-item" onclick="drawerGo('settings','procedures')"><span><strong>Procedimentos e preços</strong><span>Intervalos, categorias e valores padrão.</span></span><span class="chev">›</span></button>
+    <button class="drawer-item" onclick="drawerGo('settings','messages')"><span><strong>Mensagens WhatsApp</strong><span>Textos por perfil, procedimento e vencimento.</span></span><span class="chev">›</span></button>
+    <button class="drawer-item" onclick="drawerGo('settings','users')"><span><strong>Usuários e permissões</strong><span>Roseli, secretária, financeiro e auditoria.</span></span><span class="chev">›</span></button>
+    <button class="drawer-item" onclick="drawerGo('settings','security')"><span><strong>Segurança e backup</strong><span>Senha, exportação e proteção de dados.</span></span><span class="chev">›</span></button>
+  </div>
+  <div class="drawer-foot">
+    <div class="secure-note">A barra principal agora fica leve: rotina da clínica na frente, administração guardada no Menu.</div>
+    <button class="btn red" style="width:100%;margin-top:14px">Sair do CRM</button>
+  </div>
+</aside>
+
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div><h3 id="modalName">Ficha da paciente</h3><p id="modalSub">Histórico clínico, preferências, retornos, termos e anexos.</p></div>
+      <button class="icon-close" onclick="closeModal(event,true)" aria-label="Fechar ficha">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>Dados da paciente</h4>
+        <div class="form-grid">
+          <div class="field"><label>Nome completo</label><input id="patientName" value="Marina Albuquerque"></div>
+          <div class="field"><label>WhatsApp</label><input id="mWhats" value=""></div>
+          <div class="field"><label>Instagram</label><input value="@marina"></div>
+          <div class="field"><label>Status</label><select id="mStatus"><option>VIP</option><option>Ativa</option><option>Não quer contato</option></select></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h4>Saúde, restrições e preferências</h4>
+        <div class="form-grid">
+          <div class="field"><label>Alergias</label><input id="mAler" value=""></div>
+          <div class="field"><label>Medicamentos</label><input id="mMed" value=""></div>
+          <div class="field" style="grid-column:1/-1"><label>Observações clínicas</label><textarea id="mObs">Prefere resultado natural. Boa aderência ao retorno de Botox. Evitar abordagem muito comercial.</textarea></div>
+        </div>
+      </div>
+      <div class="grid equal">
+        <div class="modal-section">
+          <h4>Histórico</h4>
+          <div class="history-grid" id="mHistory">
+            <div class="history-item"><div><strong>Botox completo</strong><span>04/01/2026 • retorno previsto em 150 dias • glabela forte</span></div><strong>R$ 1.400</strong></div>
+            <div class="history-item"><div><strong>Skinbooster</strong><span>20/11/2025 • retorno previsto em 30 dias • pele sensível</span></div><strong>R$ 850</strong></div>
+            <div class="history-item"><div><strong>Limpeza de pele</strong><span>12/09/2025 • manutenção trimestral</span></div><strong>R$ 280</strong></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>Anexos e termos</h4>
+          <div class="attachment-grid" id="mAttach">
+            <div class="attachment"><strong>Antes/depois</strong><span>Adicionar fotos</span></div>
+            <div class="attachment"><strong>Termo assinado</strong><span>Assinatura escrita</span></div>
+            <div class="attachment"><strong>Biometria</strong><span>Opcional premium</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn secondary" onclick="closeModal(event,true)">Cancelar</button><button class="btn green" onclick="modalWhats()">Abrir WhatsApp</button><button class="btn" onclick="savePatient()">Salvar ficha</button></div>
+  </div>
+</div>
+<div class="toast" id="toast">Alterações salvas</div>
+
+<script>
+window.PRONT_DATA={"patients":[],"topProc":[],"totals":{"pacientes":0,"procedimentos":0,"com_tel":0},"recIdx":[]};
+const CRM_MEMORY_KEY='crmRoselliSouza.localMemory.v1';
+const CRM_SYNC_CONFIG_KEY='crmRoselliSouza.sheetsSync.v1';
+const CRM_SYNC_DIRTY_KEY='crmRoselliSouza.sheetsDirty.v1';
+const CRM_SHEETS_ENDPOINT='https://script.google.com/macros/s/AKfycbyeFRBX_HWsXeI5lwxu088-HyWDCceN5NDOLfeW_XEr8MgwYhhaGOhrcKI1ks0L52rFkg/exec';
+let crmSyncTimer=null;
+function loadLocalMemory(){
+  try{
+    var raw=localStorage.getItem(CRM_MEMORY_KEY);
+    if(!raw) return;
+    var saved=JSON.parse(raw);
+    if(saved && Array.isArray(saved.patients)){
+      window.PRONT_DATA.patients=saved.patients;
+      window.PRONT_DATA.topProc=saved.topProc||window.PRONT_DATA.topProc;
+      window.PRONT_DATA.totals=saved.totals||window.PRONT_DATA.totals;
+      window.PRONT_DATA.recIdx=Array.isArray(saved.recIdx)?saved.recIdx:window.PRONT_DATA.recIdx;
+    }
+  }catch(err){console.warn('Nao foi possivel carregar a memoria local',err);}
+}
+function refreshTotals(){
+  PP.totals=PP.totals||{};
+  PP.totals.pacientes=PP.patients.length;
+  PP.totals.procedimentos=PP.patients.reduce(function(total,p){return total+((p.p&&p.p.length)||0);},0);
+  PP.totals.com_tel=PP.patients.filter(function(p){return !!p.tw;}).length;
+}
+function persistLocalMemory(){
+  refreshTotals();
+  ensurePatientIds();
+  localStorage.setItem(CRM_MEMORY_KEY,JSON.stringify({
+    version:1,
+    savedAt:new Date().toISOString(),
+    patients:PP.patients,
+    topProc:PP.topProc,
+    totals:PP.totals,
+    recIdx:PP.recIdx
+  }));
+}
+loadLocalMemory();
+const PP=window.PRONT_DATA;
+let pShown=30;let curPatient=null;
+const patients = PP.patients;
+function ensurePatientIds(){
+  PP.patients.forEach(function(p,i){
+    if(!p.id){p.id='pac_'+Date.now().toString(36)+'_'+i.toString(36)+'_'+Math.random().toString(36).slice(2,8);}
+  });
+}
+function getSheetsConfig(){
+  try{return JSON.parse(localStorage.getItem(CRM_SYNC_CONFIG_KEY)||'{}');}
+  catch(err){return {};}
+}
+function setSheetsConfig(config){
+  localStorage.setItem(CRM_SYNC_CONFIG_KEY,JSON.stringify(config||{}));
+}
+function configureSheetsSync(){
+  var current=getSheetsConfig();
+  var token=prompt('Cole aqui o TOKEN do Apps Script para sincronizar com o Google Sheets:',current.token||'');
+  if(!token) return;
+  setSheetsConfig({endpoint:CRM_SHEETS_ENDPOINT,token:token.trim(),updatedAt:new Date().toISOString()});
+  toast('Sincronização configurada');
+  syncSheetsNow();
+}
+function markSheetsDirty(){
+  localStorage.setItem(CRM_SYNC_DIRTY_KEY,'1');
+}
+function scheduleSheetsSync(delay){
+  markSheetsDirty();
+  clearTimeout(crmSyncTimer);
+  crmSyncTimer=setTimeout(function(){pushSheets(false);},delay||5000);
+}
+function normalizeSheetPatient(row){
+  if(row.n) return row;
+  return {
+    id:row.id||'',
+    ini:initialsFromName(row.nome||''),
+    n:row.nome||'(sem nome)',
+    td:row.whatsapp||'',
+    tw:digitsOnly(row.whatsapp||''),
+    c:row.categoria||'Cadastro manual',
+    tp:row.tipo_prontuario||'Cadastro manual',
+    o:row.observacoes||'',
+    a:row.imagem_original||'',
+    p:Array.isArray(row.historico)?row.historico:(row.historico_json?JSON.parse(row.historico_json||'[]'):[]),
+    nv:Array.isArray(row.historico)?row.historico.length:0,
+    updatedAt:row.atualizado_em||'',
+    createdAt:row.criado_em||''
+  };
+}
+function requestJsonp(url){
+  return new Promise(function(resolve,reject){
+    var cb='crmSheetsCb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    var script=document.createElement('script');
+    var done=false;
+    var timer=setTimeout(function(){
+      if(done) return; done=true; cleanup(); reject(new Error('timeout'));
+    },20000);
+    function cleanup(){clearTimeout(timer);delete window[cb];if(script.parentNode)script.parentNode.removeChild(script);}
+    window[cb]=function(data){if(done)return;done=true;cleanup();resolve(data);};
+    script.onerror=function(){if(done)return;done=true;cleanup();reject(new Error('jsonp_error'));};
+    script.src=url+(url.indexOf('?')>=0?'&':'?')+'callback='+encodeURIComponent(cb);
+    document.head.appendChild(script);
+  });
+}
+async function pullSheets(showToast){
+  var cfg=getSheetsConfig();
+  if(!cfg.token){if(showToast) configureSheetsSync(); return 0;}
+  try{
+    var url=CRM_SHEETS_ENDPOINT+'?action=pull&token='+encodeURIComponent(cfg.token);
+    var data=await requestJsonp(url);
+    if(!data || !data.ok) throw new Error(data&&data.error?data.error:'sync_error');
+    var incoming=(data.patients||[]).map(normalizeSheetPatient);
+    if(incoming.length){
+      PP.patients=incoming;
+      ensurePatientIds();
+      refreshTotals();
+      persistLocalMemory();
+      renderLists();
+      if(showToast) toast('Dados puxados do Google Sheets');
+      return incoming.length;
+    }
+    if(showToast) toast('Sheets vazio; enviando dados locais');
+    return 0;
+  }catch(err){
+    console.warn('Falha ao puxar Sheets',err);
+    if(showToast) toast('Não foi possível puxar do Sheets');
+    return 0;
+  }
+}
+async function pushSheets(showToast){
+  var cfg=getSheetsConfig();
+  if(!cfg.token){if(showToast) configureSheetsSync(); return;}
+  try{
+    ensurePatientIds();
+    refreshTotals();
+    var payload={action:'push',token:cfg.token,patients:PP.patients};
+    await fetch(CRM_SHEETS_ENDPOINT,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    });
+    localStorage.removeItem(CRM_SYNC_DIRTY_KEY);
+    if(showToast) toast('Dados enviados ao Google Sheets');
+  }catch(err){
+    console.warn('Falha ao enviar Sheets',err);
+    if(showToast) toast('Não foi possível enviar ao Sheets');
+  }
+}
+async function syncSheetsNow(){
+  var cfg=getSheetsConfig();
+  if(!cfg.token){configureSheetsSync(); return;}
+  var pulled=await pullSheets(false);
+  if(!pulled || localStorage.getItem(CRM_SYNC_DIRTY_KEY)==='1'){
+    await pushSheets(true);
+  }else{
+    toast('Sincronizado com Google Sheets');
+  }
+}
+function initSheetsSync(){
+  var cfg=getSheetsConfig();
+  if(!cfg.token) return;
+  setInterval(function(){if(localStorage.getItem(CRM_SYNC_DIRTY_KEY)==='1')pushSheets(false);},60000);
+  pullSheets(false).then(function(count){
+    if(!count && localStorage.getItem(CRM_SYNC_DIRTY_KEY)==='1') pushSheets(false);
+  });
+}
+const agenda = [
+  {time:'09:00',name:'Marina Albuquerque',desc:'Botox completo. Preferência: resultado natural. Valor anterior R$ 1.400.',tags:['confirmada','VIP'],status:'ok'},
+  {time:'10:15',name:'Bianca Araújo',desc:'Designer de sobrancelha. Retorno recorrente a cada 15 dias.',tags:['chegou'],status:'ok'},
+  {time:'11:30',name:'Laura Mesquita',desc:'Preenchimento labial. Precisa assinar termo antes do procedimento.',tags:['termo pendente'],status:'danger'},
+  {time:'15:00',name:'Fernanda Lima',desc:'Retorno pós-procedimento. Avaliar foto de evolução.',tags:['atenção da Roseli'],status:'blue'}
+];
+const procedures = [
+  ['Botox completo','Botox','150','R$ 1.200','Ativo'],
+  ['Ácido hialurônico','Preenchimentos','365','R$ 1.600','Ativo'],
+  ['Bioestimulador de colágeno','Bioestimuladores','180','R$ 2.400','Ativo'],
+  ['Designer de sobrancelha','Sobrancelhas','15','R$ 80','Ativo'],
+  ['Skinbooster','Pele','30','R$ 850','Ativo'],
+  ['PDRN','Pele','30','R$ 900','Ativo'],
+  ['Tirzepatida','Emagrecimento','7','R$ 450','Ativo']
+];
+function go(view){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(view)?.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleDrawer(open){
+  document.getElementById('drawer').classList.toggle('open',open);
+  document.getElementById('drawerBackdrop').classList.toggle('open',open);
+  document.body.classList.toggle('drawer-open',open);
+}
+function drawerGo(view,tab){
+  toggleDrawer(false);
+  go(view);
+  if(tab) setTimeout(()=>configTab(tab, document.querySelector(`.config-tab[onclick*="${tab}"]`)),70);
+}
+function configTab(name,btn){
+  document.querySelectorAll('.config-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('cfg-'+name)?.classList.add('active');
+  document.querySelectorAll('.config-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+function tagClass(text){
+  const t=text.toLowerCase();
+  if(t.includes('vencido')||t.includes('termo')) return 'red';
+  if(t.includes('confirm')||t.includes('chegou')) return 'green';
+  if(t.includes('atenção')) return 'blue';
+  if(t.includes('vip')) return 'dark';
+  return '';
+}
+function renderLists(){
+  document.getElementById('doctorPriority').innerHTML = PP.recIdx.slice(0,4).map(realCard).join('');
+  document.getElementById('returnList').innerHTML = PP.recIdx.map(realCard).join('');
+  document.getElementById('agendaList').innerHTML = agenda.map(a=>`<article class="appointment">
+    <div class="time">${a.time}</div>
+    <div><strong>${a.name}</strong><p>${a.desc}</p><div class="tags">${a.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}</div></div>
+    <div class="row-actions"><button class="btn green small" onclick="openWhatsByName('${a.name}')">WhatsApp</button><button class="btn secondary small" onclick="openPatientByName('${a.name}')">Ficha</button></div>
+  </article>`).join('');
+  fillProcStats();fillKpis();fillFilters();renderPatientList();
+  const proc=document.getElementById('procedureEditor');
+  proc.innerHTML = procedures.map(p=>`<div class="procedure-item">
+    <div class="field"><label>Procedimento</label><input value="${p[0]}"></div>
+    <div class="field"><label>Categoria</label><select><option>${p[1]}</option><option>Botox</option><option>Pele</option><option>Preenchimentos</option><option>Corpo</option><option>Capilar</option><option>Avulso</option></select></div>
+    <div class="field"><label>Intervalo</label><input value="${p[2]} dias"></div>
+    <div class="field"><label>Valor padrão</label><input value="${p[3]}"></div>
+    <button class="btn secondary small" onclick="toast('Procedimento editado')">Editar</button>
+  </div>`).join('');
+}
+function escH(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function nrm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
+
+function realCard(idx){
+  var p=PP.patients[idx];
+  var wa = p.tw ? '<button class="btn green small" onclick="event.stopPropagation();window.open(\''+waHref(p.tw,p)+'\',\'_blank\')">WhatsApp</button>' : '';
+  return '<article class="patient-row" onclick="openPatient('+idx+')">'+
+    '<div class="avatar">'+escH(p.ini)+'</div>'+
+    '<div class="patient-main"><strong>'+escH(p.n)+'</strong>'+
+      '<div class="meta">'+escH(p.tp||p.c)+' • '+p.nv+' procedimento(s)'+(p.td?' • '+escH(p.td):'')+'</div>'+
+      '<div class="tags"><span class="tag '+(p.b?'dark':'')+'">'+escH(p.c)+'</span>'+(p.b?'<span class="tag">'+escH(p.b)+'</span>':'')+(p.lc?'<span class="tag red">leitura incerta</span>':'')+'</div>'+
+    '</div>'+
+    '<div class="row-actions"><button class="btn small" onclick="event.stopPropagation();openPatient('+idx+')">Ver ficha</button>'+wa+'</div>'+
+  '</article>';
+}
+function fillProcStats(){
+  var top=PP.topProc; if(!top||!top.length) return;
+  var max=top[0][1];
+  var html=top.slice(0,8).map(function(tp){return '<div class="progress-row"><span>'+escH(tp[0])+'</span><div class="bar"><i style="width:'+Math.round(tp[1]/max*100)+'%"></i></div><span>'+tp[1]+'</span></div>';}).join('');
+  var a=document.getElementById('procMovement'); if(a) a.innerHTML=html;
+  var b=document.getElementById('procReport'); if(b) b.innerHTML=html;
+}
+function fillKpis(){
+  var t=PP.totals; var lc=PP.patients.filter(function(p){return p.lc;}).length;
+  function set(id,v){var e=document.getElementById(id); if(e)e.textContent=v;}
+  set('kpiPac',t.pacientes); set('kpiTel',t.com_tel); set('kpiProc',t.procedimentos); set('kpiLc',lc);
+}
+function fillFilters(){
+  var f=document.getElementById('patientFilter'); if(!f) return;
+  var seen={},cats=[]; PP.patients.forEach(function(p){if(!seen[p.c]){seen[p.c]=1;cats.push(p.c);}}); cats.sort();
+  f.innerHTML='<option value="Todas">Todas</option>'+cats.map(function(c){return '<option value="'+escH(c)+'">'+escH(c)+'</option>';}).join('');
+}
+function renderPatientList(reset){
+  if(reset!==false) pShown=30;
+  var q=nrm((document.getElementById('patientSearch')?document.getElementById('patientSearch').value:'')||'');
+  var qd=q.replace(/\D/g,'');
+  var filter=(document.getElementById('patientFilter')?document.getElementById('patientFilter').value:'Todas')||'Todas';
+  var idxs=[];
+  PP.patients.forEach(function(p,i){
+    if(filter!=='Todas' && p.c!==filter) return;
+    if(q){
+      var hay=nrm(p.n+' '+p.tp+' '+(p.p||[]).map(function(x){return x[1];}).join(' '));
+      var okText=hay.indexOf(q)>-1;
+      var okPhone=qd && p.tw && p.tw.indexOf(qd)>-1;
+      if(!okText && !okPhone) return;
+    }
+    idxs.push(i);
+  });
+  var el=document.getElementById('patientList');
+  var cnt=document.getElementById('patientCount'); if(cnt) cnt.textContent=idxs.length+' paciente(s) encontrado(s)';
+  if(!idxs.length){ el.innerHTML='<div class="card pad"><strong>Nenhuma paciente encontrada.</strong><p style="color:var(--muted);margin-bottom:0">Ajuste a busca ou o filtro.</p></div>'; return; }
+  var slice=idxs.slice(0,pShown);
+  el.innerHTML=slice.map(realCard).join('') + (idxs.length>pShown?'<button class="btn secondary" style="margin:16px auto 0;display:block" onclick="pShown+=30;renderPatientList(false)">Mostrar mais ('+(idxs.length-pShown)+' restantes)</button>':'');
+}
+function openPatient(idx){
+  if(typeof idx!=='number'){ return; }
+  var p=PP.patients[idx]; curPatient=idx;
+  document.getElementById('modalName').textContent='Ficha de '+p.n;
+  var sub=document.getElementById('modalSub'); if(sub) sub.textContent=(p.tp||p.c)+(p.b?' • '+p.b:'')+(p.lc?' • transcrição com baixa certeza':'');
+  document.getElementById('patientName').value=p.n;
+  var w=document.getElementById('mWhats'); if(w) w.value=p.td||'';
+  var al=document.getElementById('mAler'); if(al) al.value='';
+  var md=document.getElementById('mMed'); if(md) md.value='';
+  var ob=document.getElementById('mObs'); if(ob) ob.value=p.o||'';
+  var h=document.getElementById('mHistory');
+  if(h){
+    if(p.p && p.p.length){
+      h.innerHTML=p.p.map(function(r){return '<div class="history-item"><div><strong>'+escH(r[1]||'—')+'</strong><span>'+escH(r[0]||'')+'</span></div><strong>'+escH(r[2]||'')+'</strong></div>';}).join('');
+    } else { h.innerHTML='<p style="color:var(--muted);margin:0">Sem histórico de procedimentos tabelado nesta ficha.</p>'; }
+  }
+  var at=document.getElementById('mAttach');
+  if(at){ at.innerHTML='<div class="attachment"><strong>Imagem original</strong><span>'+escH(p.a||'não informado')+'</span></div><div class="attachment"><strong>Termo assinado</strong><span>Assinatura escrita</span></div><div class="attachment"><strong>Biometria</strong><span>Opcional premium</span></div>'; }
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.classList.add('modal-open');
+}
+function modalWhats(){ var p=PP.patients[curPatient]; if(p&&p.tw){window.open(waHref(p.tw,p),'_blank');} else {toast('Telefone não informado para esta paciente');} }
+function firstName(fullName){
+  var name=String(fullName||'').replace(/\([^)]*\)/g,'').trim();
+  if(!name || name.indexOf('sem nome')>-1 || name.indexOf('ileg')>-1) return 'tudo bem';
+  return name.split(/\s+/)[0];
+}
+function lastProcedure(patient){
+  var history=patient&&Array.isArray(patient.p)?patient.p:[];
+  for(var i=history.length-1;i>=0;i--){
+    var proc=String(history[i][1]||'').trim();
+    if(proc && proc!=='—' && proc.indexOf('(sem atendimentos')<0) return proc;
+  }
+  return patient&&patient.c?patient.c:'seu procedimento';
+}
+function whatsappMessage(patient){
+  var name=firstName(patient&&patient.n);
+  var procedure=lastProcedure(patient);
+  return 'Oi, '+name+'! Lembrei de você essa semana e quis saber como anda sua pele e o resultado do seu tratamento de '+procedure+'. 💛\n\nMeu trabalho não termina no dia do procedimento — gosto de acompanhar como cada paciente segue depois, porque é aí que o resultado se mantém de verdade. Se quiser, marcamos uma conversa rápida pra eu ver como está e ajustar o que for preciso. Fica o convite, sem compromisso.';
+}
+function waHref(tw,patient){
+  return 'https://wa.me/55'+digitsOnly(tw)+'?text='+encodeURIComponent(whatsappMessage(patient||{}));
+}
+function openWhatsByName(name){
+  var i=PP.patients.findIndex(function(p){return (p.n||'').toLowerCase()===String(name).toLowerCase();});
+  if(i>=0 && PP.patients[i].tw){window.open(waHref(PP.patients[i].tw,PP.patients[i]),'_blank');}
+  else {toast('Telefone não informado para esta paciente');}
+}
+function digitsOnly(value){return String(value||'').replace(/\D/g,'');}
+function initialsFromName(name){
+  var clean=String(name||'').trim();
+  if(!clean) return '?';
+  return clean.split(/\s+/).slice(0,2).map(function(part){return part.charAt(0).toUpperCase();}).join('');
+}
+function collectPatientFromModal(existing){
+  var name=(document.getElementById('patientName')||{}).value||'';
+  var whats=(document.getElementById('mWhats')||{}).value||'';
+  var obs=(document.getElementById('mObs')||{}).value||'';
+  var base=existing||{};
+  return Object.assign({},base,{
+    ini:base.ini&&base.ini!=='?'?base.ini:initialsFromName(name),
+    n:name.trim()||'(sem nome)',
+    td:whats.trim(),
+    tw:digitsOnly(whats),
+    o:obs.trim(),
+    lc:base.lc||0,
+    tp:base.tp||'Cadastro manual',
+    c:base.c||'Cadastro manual',
+    b:base.b||'',
+    a:base.a||'',
+    p:Array.isArray(base.p)?base.p:[],
+    nv:Array.isArray(base.p)?base.p.length:0,
+    updatedAt:new Date().toISOString()
+  });
+}
+function savePatient(){
+  var current=typeof curPatient==='number'?PP.patients[curPatient]:null;
+  var patient=collectPatientFromModal(current);
+  if(current){
+    PP.patients[curPatient]=patient;
+  }else{
+    patient.createdAt=new Date().toISOString();
+    PP.patients.unshift(patient);
+    curPatient=0;
+  }
+  persistLocalMemory();
+  scheduleSheetsSync(1500);
+  fillKpis();
+  fillFilters();
+  renderPatientList(false);
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.classList.remove('modal-open');
+  toast('Ficha salva na memória local');
+}
+function downloadTextFile(filename,text,type){
+  var blob=new Blob([text],{type:type||'text/plain;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url);
+}
+function csvEscape(value){
+  var text=String(value==null?'':value);
+  return /[",\n;]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text;
+}
+function exportPatientsCsv(){
+  var rows=[['nome','whatsapp','categoria','tipo_prontuario','procedimentos','observacoes','imagem_original','atualizado_em']];
+  PP.patients.forEach(function(p){rows.push([p.n,p.td||p.tw,p.c,p.tp,p.nv,p.o,p.a,p.updatedAt||'']);});
+  downloadTextFile('pacientes-crm-roselli.csv',rows.map(function(r){return r.map(csvEscape).join(';');}).join('\n'),'text/csv;charset=utf-8');
+  toast('Pacientes exportados');
+}
+function exportHistoryCsv(){
+  var rows=[['paciente','data','procedimento','valor','imagem_original']];
+  PP.patients.forEach(function(p){(p.p||[]).forEach(function(item){rows.push([p.n,item[0]||'',item[1]||'',item[2]||'',p.a||'']);});});
+  downloadTextFile('historico-crm-roselli.csv',rows.map(function(r){return r.map(csvEscape).join(';');}).join('\n'),'text/csv;charset=utf-8');
+  toast('Histórico exportado');
+}
+function exportLocalBackup(){
+  persistLocalMemory();
+  downloadTextFile('backup-crm-roselli.json',localStorage.getItem(CRM_MEMORY_KEY),'application/json;charset=utf-8');
+  toast('Backup gerado');
+}
+function importLocalBackup(){
+  var input=document.createElement('input');
+  input.type='file';input.accept='application/json';
+  input.onchange=function(){
+    var file=input.files&&input.files[0]; if(!file) return;
+    var reader=new FileReader();
+    reader.onload=function(){
+      try{
+        var saved=JSON.parse(String(reader.result||''));
+        if(!saved || !Array.isArray(saved.patients)) throw new Error('Formato inválido');
+        localStorage.setItem(CRM_MEMORY_KEY,JSON.stringify(saved));
+        window.PRONT_DATA.patients=saved.patients;
+        window.PRONT_DATA.topProc=saved.topProc||window.PRONT_DATA.topProc;
+        window.PRONT_DATA.totals=saved.totals||window.PRONT_DATA.totals;
+        window.PRONT_DATA.recIdx=Array.isArray(saved.recIdx)?saved.recIdx:window.PRONT_DATA.recIdx;
+        refreshTotals();persistLocalMemory();scheduleSheetsSync(1500);renderLists();toast('Backup importado');
+      }catch(err){toast('Backup inválido');}
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+function clearLocalMemory(){
+  if(!confirm('Limpar apenas as alterações salvas neste navegador?')) return;
+  localStorage.removeItem(CRM_MEMORY_KEY);
+  location.reload();
+}
+function openPatientByName(name){
+  var i=PP.patients.findIndex(function(p){return (p.n||'').toLowerCase()===String(name).toLowerCase();});
+  if(i>=0){ openPatient(i); } else { toast('Ficha não encontrada — busque na aba Pacientes'); }
+}
+function novoPaciente(){
+  curPatient=null;
+  document.getElementById('modalName').textContent='Nova paciente';
+  var sub=document.getElementById('modalSub'); if(sub) sub.textContent='Cadastro de nova paciente';
+  ['patientName','mWhats','mAler','mMed','mObs'].forEach(function(id){var e=document.getElementById(id); if(e) e.value='';});
+  var h=document.getElementById('mHistory'); if(h) h.innerHTML='<p style="color:var(--muted);margin:0">Sem histórico ainda.</p>';
+  var at=document.getElementById('mAttach'); if(at) at.innerHTML='<div class="attachment"><strong>Antes/depois</strong><span>Adicionar fotos</span></div><div class="attachment"><strong>Termo assinado</strong><span>Assinatura escrita</span></div>';
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closeModal(e,force){
+  if(force || e.target.id==='modalBackdrop'){
+    document.getElementById('modalBackdrop').classList.remove('open');
+    document.body.classList.remove('modal-open');
+  }
+}
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+function saveMock(){persistLocalMemory();scheduleSheetsSync(1500);toast('Alterações salvas na memória local')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){toggleDrawer(false);document.getElementById('modalBackdrop').classList.remove('open');document.body.classList.remove('modal-open')}});
+renderLists();
+initSheetsSync();
+</script>
+</body>
+</html>
