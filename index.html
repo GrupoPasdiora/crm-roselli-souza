@@ -750,7 +750,12 @@ function openPatient(idx){
   document.getElementById('modalBackdrop').classList.add('open');
   document.body.classList.add('modal-open');
 }
-function modalWhats(){ var p=PP.patients[curPatient]; if(p&&p.tw){window.open(waHref(p.tw,p),'_blank');} else {toast('Telefone não informado para esta paciente');} }
+function modalWhats(){
+  var existing=typeof curPatient==='number'?PP.patients[curPatient]:null;
+  var p=collectPatientFromModal(existing);
+  if(p&&p.tw){window.open(waHref(p.tw,p),'_blank');}
+  else {toast('Informe o WhatsApp da paciente para gerar a mensagem');}
+}
 function firstName(fullName){
   var name=String(fullName||'').replace(/\([^)]*\)/g,'').trim();
   if(!name || name.indexOf('sem nome')>-1 || name.indexOf('ileg')>-1) return 'tudo bem';
