@@ -267,12 +267,6 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
         </div>
       </div>
 
-      <div class="decision-strip">
-        <article class="decision"><span class="pill red">ação da Roseli</span><strong>3 pacientes precisam de análise antes do contato.</strong><span>Histórico sensível, observação clínica ou retorno com abordagem mais cuidadosa.</span></article>
-        <article class="decision"><span class="pill green">receita possível</span><strong>R$ 18,9k em retornos vencidos nesta semana.</strong><span>Priorizar pacientes VIP e procedimentos com ticket acima de R$ 1.000.</span></article>
-        <article class="decision"><span class="pill blue">agenda de hoje</span><strong>1 termo pendente antes do procedimento.</strong><span>Laura Mesquita deve assinar o termo antes do preenchimento labial.</span></article>
-      </div>
-
       <div class="grid kpis">
         <article class="kpi primary"><div><div class="label">pacientes</div><div class="value" id="kpiPac">—</div></div><div class="hint">Prontuários cadastrados.</div></article>
         <article class="kpi"><div><div class="label">com telefone</div><div class="value" id="kpiTel">—</div></div><div class="hint">Contato disponível para WhatsApp.</div></article>
@@ -292,26 +286,11 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
         <section class="grid">
           <article class="card">
             <div class="card-head"><div><h3>Procedimentos em movimento</h3><p>Continuidade de tratamento por volume.</p></div></div>
-            <div class="card-body progress-list" id="procMovement">
-              <div class="progress-row"><span>Botox</span><div class="bar"><i style="width:88%"></i></div><span>14</span></div>
-              <div class="progress-row"><span>Skinbooster</span><div class="bar"><i style="width:68%"></i></div><span>9</span></div>
-              <div class="progress-row"><span>PDRN</span><div class="bar"><i style="width:54%"></i></div><span>7</span></div>
-              <div class="progress-row"><span>Tirzepatida</span><div class="bar"><i style="width:42%"></i></div><span>6</span></div>
-            </div>
+            <div class="card-body progress-list" id="procMovement"></div>
           </article>
           <article class="card">
-            <div class="card-head"><div><h3>Resumo do dia</h3><p>Sem garimpar tela.</p></div><button class="btn secondary small" onclick="go('agenda')">Abrir</button></div>
-            <div class="card-body">
-              <div class="mini-metrics">
-                <div class="mini-box"><strong>6</strong><span>confirmadas</span></div>
-                <div class="mini-box"><strong>3</strong><span>pendências</span></div>
-                <div class="mini-box"><strong>1</strong><span>termo pendente</span></div>
-              </div>
-              <div style="margin-top:16px">
-                <div class="toggle-row"><div><strong>09:00 Marina Albuquerque</strong><span>Botox completo, paciente VIP.</span></div><span class="status ok">ok</span></div>
-                <div class="toggle-row"><div><strong>11:30 Laura Mesquita</strong><span>Preenchimento com termo pendente.</span></div><span class="status danger">termo</span></div>
-              </div>
-            </div>
+            <div class="card-head"><div><h3>Resumo do dia</h3><p>Agendamentos reais aparecerão aqui.</p></div><button class="btn secondary small" onclick="go('agenda')">Abrir</button></div>
+            <div class="card-body"><p style="color:var(--muted);margin:0">Nenhum agendamento lançado hoje.</p></div>
           </article>
         </section>
       </div>
@@ -330,18 +309,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
         <section class="grid">
           <article class="card">
             <div class="card-head"><div><h2>Resumo operacional</h2><p>O que a equipe precisa resolver.</p></div></div>
-            <div class="card-body grid">
-              <div class="mini-metrics">
-                <div class="mini-box"><strong>6</strong><span>confirmadas</span></div>
-                <div class="mini-box"><strong>3</strong><span>pendências</span></div>
-                <div class="mini-box"><strong>R$ 5,7k</strong><span>receita prevista</span></div>
-              </div>
-              <div class="insight-list">
-                <div class="insight"><b>1</b><div><strong>Termo antes do atendimento</strong><span>Laura Mesquita não deve seguir para sala sem assinatura.</span></div></div>
-                <div class="insight"><b>2</b><div><strong>Paciente VIP na primeira agenda</strong><span>Marina pode receber plano de manutenção com abordagem leve.</span></div></div>
-                <div class="insight"><b>3</b><div><strong>Retorno de avaliação às 15h</strong><span>Fernanda precisa de fotos comparativas no histórico.</span></div></div>
-              </div>
-            </div>
+            <div class="card-body grid"><p style="color:var(--muted);margin:0">Nenhum agendamento lançado hoje.</p></div>
           </article>
         </section>
       </div>
@@ -351,12 +319,6 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
       <div class="page-head">
         <div><div class="eyebrow">ação da secretária</div><h1>Retornos</h1><p>Lista prática para contato: quem chamar, por qual procedimento, quantos dias venceu, valor anterior, tentativa e próxima ação.</p></div>
         <div class="header-tools"><button class="btn green">Enviar lote WhatsApp</button><button class="btn secondary">Filtrar</button></div>
-      </div>
-      <div class="grid kpis">
-        <article class="kpi primary"><div><div class="label">vencidas</div><div class="value">18</div></div><div class="hint">Prioridade operacional.</div></article>
-        <article class="kpi"><div><div class="label">sem resposta</div><div class="value">11</div></div><div class="hint">Precisam segunda tentativa.</div></article>
-        <article class="kpi"><div><div class="label">agendaram</div><div class="value">6</div></div><div class="hint">Conversão registrada ontem.</div></article>
-        <article class="kpi money"><div><div class="label">potencial leve</div><div class="value">R$ 18,9k</div></div><div class="hint">Estimativa por histórico anterior.</div></article>
       </div>
       <section class="card">
         <div class="card-head"><div><h2>Para chamar agora</h2><p>Ordenado por atraso, valor anterior e perfil da paciente.</p></div></div>
@@ -387,31 +349,8 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
         <div><div class="eyebrow">decisão da clínica</div><h1>Relatórios</h1><p>Menos número solto, mais decisão: receita, conversão, procedimentos que sustentam o caixa e gargalos de retorno.</p></div>
         <div class="header-tools"><button class="btn secondary">Últimos 30 dias</button><button class="btn">Exportar relatório</button></div>
       </div>
-      <div class="decision-strip">
-        <article class="decision"><span class="pill green">oportunidade</span><strong>Botox lidera receita e também retorno vencido.</strong><span>Criar campanha de manutenção para pacientes com aplicação acima de 150 dias.</span></article>
-        <article class="decision"><span class="pill red">gargalo</span><strong>31 pacientes estão há muito tempo sem contato.</strong><span>Separar por ticket anterior antes de disparar mensagem genérica.</span></article>
-        <article class="decision"><span class="pill blue">equipe</span><strong>68% dos contatos geraram resposta ou agenda.</strong><span>Boa conversão, mas os sem resposta precisam segunda tentativa organizada.</span></article>
-      </div>
-      <div class="grid kpis">
-        <article class="kpi money primary"><div><div class="label">registrado no mês</div><div class="value">R$ 42k</div></div><div class="hint">Atendimentos lançados no CRM.</div></article>
-        <article class="kpi"><div><div class="label">conversão</div><div class="value">68%</div></div><div class="hint">Responderam ou agendaram.</div></article>
-        <article class="kpi"><div><div class="label">ticket médio</div><div class="value">R$ 1k</div></div><div class="hint">Média por atendimento registrado.</div></article>
-        <article class="kpi alert"><div><div class="label">alertas</div><div class="value">31</div></div><div class="hint">Sem contato há longo período.</div></article>
-      </div>
       <div class="grid equal">
-        <section class="card">
-          <div class="card-head"><div><h2>Conversão de contatos</h2><p>Últimos 30 dias.</p></div></div>
-          <div class="card-body"><div class="donut-wrap"><div class="donut"><strong>68%</strong></div><div class="legend"><span><i class="dot"></i>Contatos respondidos</span><span><i class="dot green"></i>Agendamentos confirmados</span><span><i class="dot red"></i>Sem resposta</span></div></div></div>
-        </section>
-        <section class="card">
-          <div class="card-head"><div><h2>Procedimentos mais realizados</h2><p>Contagem aproximada nos prontuários.</p></div></div>
-          <div class="card-body progress-list" id="procReport">
-            <div class="progress-row"><span>Botox</span><div class="bar"><i style="width:92%"></i></div><span>R$ 31k</span></div>
-            <div class="progress-row"><span>Bioestimulador</span><div class="bar"><i style="width:78%"></i></div><span>R$ 26k</span></div>
-            <div class="progress-row"><span>Preenchimento</span><div class="bar"><i style="width:69%"></i></div><span>R$ 22k</span></div>
-            <div class="progress-row"><span>Skinbooster</span><div class="bar"><i style="width:44%"></i></div><span>R$ 12k</span></div>
-          </div>
-        </section>
+        <section class="card"><div class="card-head"><div><h2>Relatórios</h2><p>Os relatórios serão gerados a partir dos dados reais sincronizados.</p></div></div><div class="card-body"><p style="color:var(--muted);margin:0">Nenhum relatório real gerado ainda.</p></div></section>
       </div>
     </section>
 
@@ -486,9 +425,9 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
       <div class="modal-section">
         <h4>Dados da paciente</h4>
         <div class="form-grid">
-          <div class="field"><label>Nome completo</label><input id="patientName" value="Marina Albuquerque"></div>
+          <div class="field"><label>Nome completo</label><input id="patientName" value=""></div>
           <div class="field"><label>WhatsApp</label><input id="mWhats" value=""></div>
-          <div class="field"><label>Instagram</label><input value="@marina"></div>
+          <div class="field"><label>Instagram</label><input value=""></div>
           <div class="field"><label>Status</label><select id="mStatus"><option>VIP</option><option>Ativa</option><option>Não quer contato</option></select></div>
         </div>
       </div>
@@ -497,17 +436,13 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
         <div class="form-grid">
           <div class="field"><label>Alergias</label><input id="mAler" value=""></div>
           <div class="field"><label>Medicamentos</label><input id="mMed" value=""></div>
-          <div class="field" style="grid-column:1/-1"><label>Observações clínicas</label><textarea id="mObs">Prefere resultado natural. Boa aderência ao retorno de Botox. Evitar abordagem muito comercial.</textarea></div>
+          <div class="field" style="grid-column:1/-1"><label>Observações clínicas</label><textarea id="mObs"></textarea></div>
         </div>
       </div>
       <div class="grid equal">
         <div class="modal-section">
           <h4>Histórico</h4>
-          <div class="history-grid" id="mHistory">
-            <div class="history-item"><div><strong>Botox completo</strong><span>04/01/2026 • retorno previsto em 150 dias • glabela forte</span></div><strong>R$ 1.400</strong></div>
-            <div class="history-item"><div><strong>Skinbooster</strong><span>20/11/2025 • retorno previsto em 30 dias • pele sensível</span></div><strong>R$ 850</strong></div>
-            <div class="history-item"><div><strong>Limpeza de pele</strong><span>12/09/2025 • manutenção trimestral</span></div><strong>R$ 280</strong></div>
-          </div>
+          <div class="history-grid" id="mHistory"><p style="color:var(--muted);margin:0">Sem histórico lançado.</p></div>
         </div>
         <div class="modal-section">
           <h4>Anexos e termos</h4>
@@ -690,21 +625,8 @@ function initSheetsSync(){
     if(!count && localStorage.getItem(CRM_SYNC_DIRTY_KEY)==='1') pushSheets(false);
   });
 }
-const agenda = [
-  {time:'09:00',name:'Marina Albuquerque',desc:'Botox completo. Preferência: resultado natural. Valor anterior R$ 1.400.',tags:['confirmada','VIP'],status:'ok'},
-  {time:'10:15',name:'Bianca Araújo',desc:'Designer de sobrancelha. Retorno recorrente a cada 15 dias.',tags:['chegou'],status:'ok'},
-  {time:'11:30',name:'Laura Mesquita',desc:'Preenchimento labial. Precisa assinar termo antes do procedimento.',tags:['termo pendente'],status:'danger'},
-  {time:'15:00',name:'Fernanda Lima',desc:'Retorno pós-procedimento. Avaliar foto de evolução.',tags:['atenção da Roseli'],status:'blue'}
-];
-const procedures = [
-  ['Botox completo','Botox','150','R$ 1.200','Ativo'],
-  ['Ácido hialurônico','Preenchimentos','365','R$ 1.600','Ativo'],
-  ['Bioestimulador de colágeno','Bioestimuladores','180','R$ 2.400','Ativo'],
-  ['Designer de sobrancelha','Sobrancelhas','15','R$ 80','Ativo'],
-  ['Skinbooster','Pele','30','R$ 850','Ativo'],
-  ['PDRN','Pele','30','R$ 900','Ativo'],
-  ['Tirzepatida','Emagrecimento','7','R$ 450','Ativo']
-];
+const agenda = [];
+const procedures = [];
 function go(view){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(view)?.classList.add('active');
@@ -736,22 +658,22 @@ function tagClass(text){
   return '';
 }
 function renderLists(){
-  document.getElementById('doctorPriority').innerHTML = PP.recIdx.slice(0,4).map(realCard).join('');
-  document.getElementById('returnList').innerHTML = PP.recIdx.map(realCard).join('');
-  document.getElementById('agendaList').innerHTML = agenda.map(a=>`<article class="appointment">
+  var priority=document.getElementById('doctorPriority'); if(priority) priority.innerHTML = PP.recIdx && PP.recIdx.length ? PP.recIdx.slice(0,4).map(realCard).join('') : '<p style="color:var(--muted);margin:0">Nenhuma prioridade lançada.</p>';
+  var returns=document.getElementById('returnList'); if(returns) returns.innerHTML = PP.recIdx && PP.recIdx.length ? PP.recIdx.map(realCard).join('') : '<p style="color:var(--muted);margin:0">Nenhum retorno lançado.</p>';
+  document.getElementById('agendaList').innerHTML = agenda.length ? agenda.map(a=>`<article class="appointment">
     <div class="time">${a.time}</div>
     <div><strong>${a.name}</strong><p>${a.desc}</p><div class="tags">${a.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}</div></div>
     <div class="row-actions"><button class="btn green small" onclick="openWhatsByName('${a.name}')">WhatsApp</button><button class="btn secondary small" onclick="openPatientByName('${a.name}')">Ficha</button></div>
-  </article>`).join('');
+  </article>`).join('') : '<p style="color:var(--muted);margin:0">Nenhum agendamento lançado hoje.</p>';
   fillProcStats();fillKpis();fillFilters();renderPatientList();
   const proc=document.getElementById('procedureEditor');
-  proc.innerHTML = procedures.map(p=>`<div class="procedure-item">
+  if(proc) proc.innerHTML = procedures.length ? procedures.map(p=>`<div class="procedure-item">
     <div class="field"><label>Procedimento</label><input value="${p[0]}"></div>
     <div class="field"><label>Categoria</label><select><option>${p[1]}</option><option>Botox</option><option>Pele</option><option>Preenchimentos</option><option>Corpo</option><option>Capilar</option><option>Avulso</option></select></div>
     <div class="field"><label>Intervalo</label><input value="${p[2]} dias"></div>
     <div class="field"><label>Valor padrão</label><input value="${p[3]}"></div>
     <button class="btn secondary small" onclick="toast('Procedimento editado')">Editar</button>
-  </div>`).join('');
+  </div>`).join('') : '<p style="color:var(--muted);margin:0">Nenhum procedimento padrão cadastrado.</p>';
 }
 function escH(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function nrm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
