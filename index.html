@@ -307,12 +307,12 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
           <button class="config-tab" data-agenda-mode="week" onclick="setAgendaMode('week',this)">Semana</button>
           <button class="config-tab" data-agenda-mode="month" onclick="setAgendaMode('month',this)">Mês</button>
         </div>
-        <div class="field agenda-date-field"><label>Data de referência</label><input id="agendaDate" type="date" onchange="renderLists()"></div>
+        <div class="field agenda-date-field"><label>Data de referência</label><input id="agendaDate" type="text" inputmode="numeric" maxlength="8" placeholder="dd/mm/aa" onchange="normalizeAgendaDateInput(this);renderLists()"></div>
       </div>
       <section class="card" id="agendaFormCard" style="display:none;margin-bottom:22px">
         <div class="card-head"><div><h2>Novo agendamento</h2><p>Cadastro rápido para a agenda de hoje.</p></div></div>
         <div class="card-body form-grid">
-          <div class="field"><label>Data</label><input id="agendaFormDate" type="date"></div>
+          <div class="field"><label>Data</label><input id="agendaFormDate" type="text" inputmode="numeric" maxlength="8" placeholder="dd/mm/aa" onchange="normalizeAgendaDateInput(this)"></div>
           <div class="field"><label>Horário</label><input id="agendaTime" type="time"></div>
           <div class="field"><label>Paciente</label><input id="agendaPatient" list="agendaPatientOptions" placeholder="Nome da paciente"><datalist id="agendaPatientOptions"></datalist></div>
           <div class="field"><label>Procedimento</label><input id="agendaProcedure" placeholder="Ex: Limpeza de pele"></div>
@@ -850,6 +850,14 @@ function parseISODate(value){
   if(parts.length!==3 || !parts[0]) return null;
   return new Date(parts[0],parts[1]-1,parts[2]);
 }
+function parseAgendaDate(value){
+  var text=String(value||'').trim();
+  if(/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+  var parts=text.split('/').map(Number);
+  if(parts.length!==3 || !parts[0] || !parts[1]) return '';
+  var year=parts[2] < 100 ? 2000 + parts[2] : parts[2];
+  return dateToISO(new Date(year,parts[1]-1,parts[0]));
+}
 function dateToISO(date){
   var d=new Date(date);
   d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
@@ -857,7 +865,8 @@ function dateToISO(date){
 }
 function formatDateBR(iso){
   var d=parseISODate(iso);
-  return d?d.toLocaleDateString('pt-BR'):'sem data';
+  if(!d) return 'sem data';
+  return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getFullYear()).slice(-2);
 }
 function formatAgendaDateTime(a){
   return agendaMode==='day' ? (a.time||'--:--') : formatDateBR(a.date)+' '+(a.time||'--:--');
@@ -879,8 +888,12 @@ function normalizeAppointment(a){
 }
 function selectedAgendaDate(){
   var input=document.getElementById('agendaDate');
-  if(input && !input.value) input.value=todayISO();
-  return (input&&input.value)||todayISO();
+  if(input && !input.value) input.value=formatDateBR(todayISO());
+  return parseAgendaDate(input&&input.value)||todayISO();
+}
+function normalizeAgendaDateInput(input){
+  var iso=parseAgendaDate(input&&input.value);
+  if(input) input.value=formatDateBR(iso||todayISO());
 }
 function rangeForAgenda(){
   var base=parseISODate(selectedAgendaDate())||new Date();
@@ -925,12 +938,12 @@ function toggleAgendaForm(open){
   card.style.display=open?'block':'none';
   if(open){
     fillAgendaPatients();
-    var d=document.getElementById('agendaFormDate'); if(d) d.value=selectedAgendaDate();
+    var d=document.getElementById('agendaFormDate'); if(d) d.value=formatDateBR(selectedAgendaDate());
     setTimeout(function(){var e=document.getElementById('agendaTime'); if(e)e.focus();},80);
   }
 }
 function saveAppointment(){
-  var date=(document.getElementById('agendaFormDate')||{}).value||selectedAgendaDate();
+  var date=parseAgendaDate((document.getElementById('agendaFormDate')||{}).value)||selectedAgendaDate();
   var time=(document.getElementById('agendaTime')||{}).value||'';
   var name=((document.getElementById('agendaPatient')||{}).value||'').trim();
   var proc=((document.getElementById('agendaProcedure')||{}).value||'').trim();
