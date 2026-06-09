@@ -299,8 +299,19 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
     <section id="agenda" class="page">
       <div class="page-head">
         <div><div class="eyebrow">rotina da clínica</div><h1>Agenda de hoje</h1><p>O dia inteiro em uma tela única: horário, paciente, status, pendência, ficha e WhatsApp. Menos abas, menos caça ao tesouro.</p></div>
-        <div class="header-tools"><button class="btn">Novo agendamento</button><button class="btn secondary">Exportar dia</button></div>
+        <div class="header-tools"><button class="btn" onclick="toggleAgendaForm(true)">Novo agendamento</button><button class="btn secondary" onclick="exportAgendaDay()">Exportar dia</button></div>
       </div>
+      <section class="card" id="agendaFormCard" style="display:none;margin-bottom:22px">
+        <div class="card-head"><div><h2>Novo agendamento</h2><p>Cadastro rápido para a agenda de hoje.</p></div></div>
+        <div class="card-body form-grid">
+          <div class="field"><label>Horário</label><input id="agendaTime" type="time"></div>
+          <div class="field"><label>Paciente</label><input id="agendaPatient" list="agendaPatientOptions" placeholder="Nome da paciente"><datalist id="agendaPatientOptions"></datalist></div>
+          <div class="field"><label>Procedimento</label><input id="agendaProcedure" placeholder="Ex: Limpeza de pele"></div>
+          <div class="field"><label>Status</label><select id="agendaStatus"><option>Agendado</option><option>Confirmado</option><option>Chegou</option><option>Atenção</option></select></div>
+          <div class="field" style="grid-column:1/-1"><label>Observação</label><textarea id="agendaNotes" placeholder="Pendência, preferência ou lembrete"></textarea></div>
+          <div style="grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button class="btn secondary" onclick="toggleAgendaForm(false)">Cancelar</button><button class="btn" onclick="saveAppointment()">Salvar agendamento</button></div>
+        </div>
+      </section>
       <div class="grid equal">
         <section class="card">
           <div class="card-head"><div><h2>Timeline do dia</h2><p>Fluxo com confirmação e ação rápida.</p></div></div>
@@ -462,6 +473,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
 <script>
 window.PRONT_DATA={"patients":[],"topProc":[],"totals":{"pacientes":0,"procedimentos":0,"com_tel":0},"recIdx":[]};
 const CRM_MEMORY_KEY='crmRoselliSouza.localMemory.v1';
+const CRM_AGENDA_KEY='crmRoselliSouza.agendaHoje.v1';
 const CRM_SYNC_CONFIG_KEY='crmRoselliSouza.sheetsSync.v1';
 const CRM_SYNC_DIRTY_KEY='crmRoselliSouza.sheetsDirty.v1';
 const CRM_SHEETS_ENDPOINT='https://script.google.com/macros/s/AKfycbyeFRBX_HWsXeI5lwxu088-HyWDCceN5NDOLfeW_XEr8MgwYhhaGOhrcKI1ks0L52rFkg/exec';
@@ -625,7 +637,16 @@ function initSheetsSync(){
     if(!count && localStorage.getItem(CRM_SYNC_DIRTY_KEY)==='1') pushSheets(false);
   });
 }
-const agenda = [];
+function loadAgendaMemory(){
+  try{
+    var saved=JSON.parse(localStorage.getItem(CRM_AGENDA_KEY)||'[]');
+    return Array.isArray(saved)?saved:[];
+  }catch(err){return [];}
+}
+function persistAgendaMemory(){
+  localStorage.setItem(CRM_AGENDA_KEY,JSON.stringify(agenda));
+}
+const agenda = loadAgendaMemory();
 const procedures = [];
 function go(view){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -660,11 +681,13 @@ function tagClass(text){
 function renderLists(){
   var priority=document.getElementById('doctorPriority'); if(priority) priority.innerHTML = PP.recIdx && PP.recIdx.length ? PP.recIdx.slice(0,4).map(realCard).join('') : '<p style="color:var(--muted);margin:0">Nenhuma prioridade lançada.</p>';
   var returns=document.getElementById('returnList'); if(returns) returns.innerHTML = PP.recIdx && PP.recIdx.length ? PP.recIdx.map(realCard).join('') : '<p style="color:var(--muted);margin:0">Nenhum retorno lançado.</p>';
-  document.getElementById('agendaList').innerHTML = agenda.length ? agenda.map(a=>`<article class="appointment">
-    <div class="time">${a.time}</div>
-    <div><strong>${a.name}</strong><p>${a.desc}</p><div class="tags">${a.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}</div></div>
-    <div class="row-actions"><button class="btn green small" onclick="openWhatsByName('${a.name}')">WhatsApp</button><button class="btn secondary small" onclick="openPatientByName('${a.name}')">Ficha</button></div>
-  </article>`).join('') : '<p style="color:var(--muted);margin:0">Nenhum agendamento lançado hoje.</p>';
+  var agendaEl=document.getElementById('agendaList');
+  if(agendaEl) agendaEl.innerHTML = agenda.length ? agenda.map(function(a,i){return `<article class="appointment">
+    <div class="time">${escH(a.time||'--:--')}</div>
+    <div><strong>${escH(a.name||'Paciente')}</strong><p>${escH(a.desc||'')}</p><div class="tags">${(a.tags||[]).map(t=>`<span class="tag ${tagClass(t)}">${escH(t)}</span>`).join('')}</div></div>
+    <div class="row-actions"><button class="btn green small" onclick="openAgendaWhats(${i})">WhatsApp</button><button class="btn secondary small" onclick="openAgendaPatient(${i})">Ficha</button></div>
+  </article>`;}).join('') : '<p style="color:var(--muted);margin:0">Nenhum agendamento lançado hoje.</p>';
+  fillAgendaPatients();
   fillProcStats();fillKpis();fillFilters();renderPatientList();
   const proc=document.getElementById('procedureEditor');
   if(proc) proc.innerHTML = procedures.length ? procedures.map(p=>`<div class="procedure-item">
@@ -790,6 +813,51 @@ function openWhatsByName(name){
   var i=PP.patients.findIndex(function(p){return (p.n||'').toLowerCase()===String(name).toLowerCase();});
   if(i>=0 && PP.patients[i].tw){window.open(waHref(PP.patients[i].tw,PP.patients[i]),'_blank');}
   else {toast('Telefone não informado para esta paciente');}
+}
+function openAgendaWhats(index){
+  var a=agenda[index];
+  if(a){openWhatsByName(a.name);}
+}
+function openAgendaPatient(index){
+  var a=agenda[index];
+  if(a){openPatientByName(a.name);}
+}
+function fillAgendaPatients(){
+  var list=document.getElementById('agendaPatientOptions');
+  if(!list) return;
+  list.innerHTML=PP.patients.slice(0,500).map(function(p){return '<option value="'+escH(p.n)+'"></option>';}).join('');
+}
+function toggleAgendaForm(open){
+  go('agenda');
+  var card=document.getElementById('agendaFormCard');
+  if(!card) return;
+  card.style.display=open?'block':'none';
+  if(open){
+    fillAgendaPatients();
+    setTimeout(function(){var e=document.getElementById('agendaTime'); if(e)e.focus();},80);
+  }
+}
+function saveAppointment(){
+  var time=(document.getElementById('agendaTime')||{}).value||'';
+  var name=((document.getElementById('agendaPatient')||{}).value||'').trim();
+  var proc=((document.getElementById('agendaProcedure')||{}).value||'').trim();
+  var status=((document.getElementById('agendaStatus')||{}).value||'Agendado').trim();
+  var notes=((document.getElementById('agendaNotes')||{}).value||'').trim();
+  if(!name){toast('Informe a paciente do agendamento');return;}
+  agenda.push({time:time||'--:--',name:name,desc:[proc,notes].filter(Boolean).join(' • ')||'Agendamento sem procedimento informado',tags:[status]});
+  agenda.sort(function(a,b){return String(a.time||'').localeCompare(String(b.time||''));});
+  persistAgendaMemory();
+  ['agendaTime','agendaPatient','agendaProcedure','agendaNotes'].forEach(function(id){var e=document.getElementById(id); if(e)e.value='';});
+  var st=document.getElementById('agendaStatus'); if(st) st.value='Agendado';
+  toggleAgendaForm(false);
+  renderLists();
+  toast('Agendamento salvo');
+}
+function exportAgendaDay(){
+  var rows=[['horario','paciente','procedimento_observacao','status']];
+  agenda.forEach(function(a){rows.push([a.time||'',a.name||'',a.desc||'',(a.tags||[]).join(', ')]);});
+  downloadTextFile('agenda-crm-roselli.csv',rows.map(function(r){return r.map(csvEscape).join(';');}).join('\n'),'text/csv;charset=utf-8');
+  toast('Agenda exportada');
 }
 function digitsOnly(value){return String(value||'').replace(/\D/g,'');}
 function initialsFromName(name){
