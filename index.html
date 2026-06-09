@@ -298,12 +298,19 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
 
     <section id="agenda" class="page">
       <div class="page-head">
-        <div><div class="eyebrow">rotina da clínica</div><h1>Agenda de hoje</h1><p>O dia inteiro em uma tela única: horário, paciente, status, pendência, ficha e WhatsApp. Menos abas, menos caça ao tesouro.</p></div>
+        <div><div class="eyebrow">rotina da clínica</div><h1>Agenda</h1><p>Dia, semana e mês em uma tela única: horário, paciente, status, pendência, ficha e WhatsApp.</p></div>
         <div class="header-tools"><button class="btn" onclick="toggleAgendaForm(true)">Novo agendamento</button><button class="btn secondary" onclick="exportAgendaDay()">Exportar dia</button></div>
+      </div>
+      <div class="config-tabs" style="align-items:center">
+        <button class="config-tab active" data-agenda-mode="day" onclick="setAgendaMode('day',this)">Dia</button>
+        <button class="config-tab" data-agenda-mode="week" onclick="setAgendaMode('week',this)">Semana</button>
+        <button class="config-tab" data-agenda-mode="month" onclick="setAgendaMode('month',this)">Mês</button>
+        <div class="field" style="min-width:210px;margin-left:auto"><label>Data de referência</label><input id="agendaDate" type="date" onchange="renderLists()"></div>
       </div>
       <section class="card" id="agendaFormCard" style="display:none;margin-bottom:22px">
         <div class="card-head"><div><h2>Novo agendamento</h2><p>Cadastro rápido para a agenda de hoje.</p></div></div>
         <div class="card-body form-grid">
+          <div class="field"><label>Data</label><input id="agendaFormDate" type="date"></div>
           <div class="field"><label>Horário</label><input id="agendaTime" type="time"></div>
           <div class="field"><label>Paciente</label><input id="agendaPatient" list="agendaPatientOptions" placeholder="Nome da paciente"><datalist id="agendaPatientOptions"></datalist></div>
           <div class="field"><label>Procedimento</label><input id="agendaProcedure" placeholder="Ex: Limpeza de pele"></div>
@@ -314,7 +321,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
       </section>
       <div class="grid equal">
         <section class="card">
-          <div class="card-head"><div><h2>Timeline do dia</h2><p>Fluxo com confirmação e ação rápida.</p></div></div>
+            <div class="card-head"><div><h2 id="agendaTitle">Timeline do dia</h2><p id="agendaSubtitle">Fluxo com confirmação e ação rápida.</p></div></div>
           <div class="card-body timeline" id="agendaList"></div>
         </section>
         <section class="grid">
@@ -473,7 +480,8 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
 <script>
 window.PRONT_DATA={"patients":[],"topProc":[],"totals":{"pacientes":0,"procedimentos":0,"com_tel":0},"recIdx":[]};
 const CRM_MEMORY_KEY='crmRoselliSouza.localMemory.v1';
-const CRM_AGENDA_KEY='crmRoselliSouza.agendaHoje.v1';
+const CRM_AGENDA_KEY='crmRoselliSouza.agenda.v2';
+const CRM_OLD_AGENDA_KEY='crmRoselliSouza.agendaHoje.v1';
 const CRM_SYNC_CONFIG_KEY='crmRoselliSouza.sheetsSync.v1';
 const CRM_SYNC_DIRTY_KEY='crmRoselliSouza.sheetsDirty.v1';
 const CRM_SHEETS_ENDPOINT='https://script.google.com/macros/s/AKfycbyeFRBX_HWsXeI5lwxu088-HyWDCceN5NDOLfeW_XEr8MgwYhhaGOhrcKI1ks0L52rFkg/exec';
@@ -582,6 +590,11 @@ async function pullSheets(showToast){
     var data=await requestJsonp(url);
     if(!data || !data.ok) throw new Error(data&&data.error?data.error:'sync_error');
     var incoming=(data.patients||[]).map(normalizeSheetPatient);
+    if(Array.isArray(data.appointments)){
+      agenda.splice(0,agenda.length);
+      data.appointments.forEach(function(a){agenda.push(normalizeAppointment(a));});
+      persistAgendaMemory();
+    }
     if(incoming.length){
       PP.patients=incoming;
       ensurePatientIds();
@@ -605,7 +618,7 @@ async function pushSheets(showToast){
   try{
     ensurePatientIds();
     refreshTotals();
-    var payload={action:'push',token:cfg.token,patients:PP.patients};
+    var payload={action:'push',token:cfg.token,patients:PP.patients,appointments:agenda};
     await fetch(CRM_SHEETS_ENDPOINT,{
       method:'POST',
       mode:'no-cors',
@@ -639,7 +652,7 @@ function initSheetsSync(){
 }
 function loadAgendaMemory(){
   try{
-    var saved=JSON.parse(localStorage.getItem(CRM_AGENDA_KEY)||'[]');
+    var saved=JSON.parse(localStorage.getItem(CRM_AGENDA_KEY)||localStorage.getItem(CRM_OLD_AGENDA_KEY)||'[]');
     return Array.isArray(saved)?saved:[];
   }catch(err){return [];}
 }
@@ -647,6 +660,7 @@ function persistAgendaMemory(){
   localStorage.setItem(CRM_AGENDA_KEY,JSON.stringify(agenda));
 }
 const agenda = loadAgendaMemory();
+let agendaMode='day';
 const procedures = [];
 function go(view){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -682,11 +696,13 @@ function renderLists(){
   var priority=document.getElementById('doctorPriority'); if(priority) priority.innerHTML = PP.recIdx && PP.recIdx.length ? PP.recIdx.slice(0,4).map(realCard).join('') : '<p style="color:var(--muted);margin:0">Nenhuma prioridade lançada.</p>';
   var returns=document.getElementById('returnList'); if(returns) returns.innerHTML = PP.recIdx && PP.recIdx.length ? PP.recIdx.map(realCard).join('') : '<p style="color:var(--muted);margin:0">Nenhum retorno lançado.</p>';
   var agendaEl=document.getElementById('agendaList');
-  if(agendaEl) agendaEl.innerHTML = agenda.length ? agenda.map(function(a,i){return `<article class="appointment">
-    <div class="time">${escH(a.time||'--:--')}</div>
+  var agendaFiltered=getAgendaFiltered();
+  updateAgendaHeader(agendaFiltered);
+  if(agendaEl) agendaEl.innerHTML = agendaFiltered.length ? agendaFiltered.map(function(row){var a=row.item;var i=row.index;return `<article class="appointment">
+    <div class="time">${escH(formatAgendaDateTime(a))}</div>
     <div><strong>${escH(a.name||'Paciente')}</strong><p>${escH(a.desc||'')}</p><div class="tags">${(a.tags||[]).map(t=>`<span class="tag ${tagClass(t)}">${escH(t)}</span>`).join('')}</div></div>
     <div class="row-actions"><button class="btn green small" onclick="openAgendaWhats(${i})">WhatsApp</button><button class="btn secondary small" onclick="openAgendaPatient(${i})">Ficha</button></div>
-  </article>`;}).join('') : '<p style="color:var(--muted);margin:0">Nenhum agendamento lançado hoje.</p>';
+  </article>`;}).join('') : '<p style="color:var(--muted);margin:0">Nenhum agendamento lançado neste período.</p>';
   fillAgendaPatients();
   fillProcStats();fillKpis();fillFilters();renderPatientList();
   const proc=document.getElementById('procedureEditor');
@@ -822,6 +838,79 @@ function openAgendaPatient(index){
   var a=agenda[index];
   if(a){openPatientByName(a.name);}
 }
+function todayISO(){
+  var d=new Date();
+  d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
+function parseISODate(value){
+  var parts=String(value||'').split('-').map(Number);
+  if(parts.length!==3 || !parts[0]) return null;
+  return new Date(parts[0],parts[1]-1,parts[2]);
+}
+function dateToISO(date){
+  var d=new Date(date);
+  d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
+function formatDateBR(iso){
+  var d=parseISODate(iso);
+  return d?d.toLocaleDateString('pt-BR'):'sem data';
+}
+function formatAgendaDateTime(a){
+  return agendaMode==='day' ? (a.time||'--:--') : formatDateBR(a.date)+' '+(a.time||'--:--');
+}
+function normalizeAppointment(a){
+  a=a||{};
+  return {
+    id:a.id||('age_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8)),
+    date:a.date||a.data||todayISO(),
+    time:a.time||a.horario||'--:--',
+    name:a.name||a.paciente||'',
+    desc:a.desc||a.procedimento_observacao||a.procedimento||'',
+    tags:Array.isArray(a.tags)?a.tags:(a.status?[a.status]:['Agendado']),
+    patientId:a.patientId||a.paciente_id||'',
+    whatsapp:a.whatsapp||'',
+    createdAt:a.createdAt||a.criado_em||new Date().toISOString(),
+    updatedAt:a.updatedAt||a.atualizado_em||new Date().toISOString()
+  };
+}
+function selectedAgendaDate(){
+  var input=document.getElementById('agendaDate');
+  if(input && !input.value) input.value=todayISO();
+  return (input&&input.value)||todayISO();
+}
+function rangeForAgenda(){
+  var base=parseISODate(selectedAgendaDate())||new Date();
+  var start=new Date(base), end=new Date(base);
+  if(agendaMode==='week'){
+    var day=(base.getDay()+6)%7;
+    start.setDate(base.getDate()-day);
+    end=new Date(start); end.setDate(start.getDate()+6);
+  }else if(agendaMode==='month'){
+    start=new Date(base.getFullYear(),base.getMonth(),1);
+    end=new Date(base.getFullYear(),base.getMonth()+1,0);
+  }
+  return {start:dateToISO(start),end:dateToISO(end)};
+}
+function getAgendaFiltered(){
+  var range=rangeForAgenda();
+  return agenda.map(function(item,index){return {item:normalizeAppointment(item),index:index};})
+    .filter(function(row){var d=row.item.date||todayISO();return d>=range.start && d<=range.end;})
+    .sort(function(a,b){return String(a.item.date).localeCompare(String(b.item.date)) || String(a.item.time).localeCompare(String(b.item.time));});
+}
+function updateAgendaHeader(items){
+  var title=document.getElementById('agendaTitle');
+  var subtitle=document.getElementById('agendaSubtitle');
+  var range=rangeForAgenda();
+  if(title) title.textContent=agendaMode==='day'?'Agenda do dia':agendaMode==='week'?'Agenda da semana':'Agenda do mês';
+  if(subtitle) subtitle.textContent=formatDateBR(range.start)+(range.end!==range.start?' até '+formatDateBR(range.end):'')+' • '+items.length+' agendamento(s)';
+}
+function setAgendaMode(mode,btn){
+  agendaMode=mode||'day';
+  document.querySelectorAll('[data-agenda-mode]').forEach(function(b){b.classList.toggle('active',b===btn || b.dataset.agendaMode===agendaMode);});
+  renderLists();
+}
 function fillAgendaPatients(){
   var list=document.getElementById('agendaPatientOptions');
   if(!list) return;
@@ -834,19 +923,22 @@ function toggleAgendaForm(open){
   card.style.display=open?'block':'none';
   if(open){
     fillAgendaPatients();
+    var d=document.getElementById('agendaFormDate'); if(d) d.value=selectedAgendaDate();
     setTimeout(function(){var e=document.getElementById('agendaTime'); if(e)e.focus();},80);
   }
 }
 function saveAppointment(){
+  var date=(document.getElementById('agendaFormDate')||{}).value||selectedAgendaDate();
   var time=(document.getElementById('agendaTime')||{}).value||'';
   var name=((document.getElementById('agendaPatient')||{}).value||'').trim();
   var proc=((document.getElementById('agendaProcedure')||{}).value||'').trim();
   var status=((document.getElementById('agendaStatus')||{}).value||'Agendado').trim();
   var notes=((document.getElementById('agendaNotes')||{}).value||'').trim();
   if(!name){toast('Informe a paciente do agendamento');return;}
-  agenda.push({time:time||'--:--',name:name,desc:[proc,notes].filter(Boolean).join(' • ')||'Agendamento sem procedimento informado',tags:[status]});
-  agenda.sort(function(a,b){return String(a.time||'').localeCompare(String(b.time||''));});
+  agenda.push(normalizeAppointment({date:date,time:time||'--:--',name:name,desc:[proc,notes].filter(Boolean).join(' • ')||'Agendamento sem procedimento informado',tags:[status]}));
+  agenda.sort(function(a,b){return String(a.date||'').localeCompare(String(b.date||'')) || String(a.time||'').localeCompare(String(b.time||''));});
   persistAgendaMemory();
+  scheduleSheetsSync(1500);
   ['agendaTime','agendaPatient','agendaProcedure','agendaNotes'].forEach(function(id){var e=document.getElementById(id); if(e)e.value='';});
   var st=document.getElementById('agendaStatus'); if(st) st.value='Agendado';
   toggleAgendaForm(false);
@@ -855,7 +947,7 @@ function saveAppointment(){
 }
 function exportAgendaDay(){
   var rows=[['horario','paciente','procedimento_observacao','status']];
-  agenda.forEach(function(a){rows.push([a.time||'',a.name||'',a.desc||'',(a.tags||[]).join(', ')]);});
+  getAgendaFiltered().forEach(function(row){var a=row.item;rows.push([a.date+' '+(a.time||''),a.name||'',a.desc||'',(a.tags||[]).join(', ')]);});
   downloadTextFile('agenda-crm-roselli.csv',rows.map(function(r){return r.map(csvEscape).join(';');}).join('\n'),'text/csv;charset=utf-8');
   toast('Agenda exportada');
 }
