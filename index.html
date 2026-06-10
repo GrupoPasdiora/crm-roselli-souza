@@ -207,7 +207,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
 .progress-list{display:grid;gap:16px}.progress-row{display:grid;grid-template-columns:136px 1fr 56px;gap:16px;align-items:center;font-weight:800}.progress-row span:first-child{font-size:13.5px}.progress-row span:last-child{text-align:right;color:var(--gold-dark);font-size:14px}.bar{height:10px;border-radius:999px;background:#efe6d5;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px;background:var(--grad-gold)}
 
 /* Agenda */
-.timeline{display:grid;gap:13px}.agenda-toolbar{display:grid;grid-template-columns:1fr minmax(180px,230px);gap:16px;align-items:end;margin-bottom:18px}.agenda-mode-group{display:flex;gap:8px;flex-wrap:wrap}.agenda-date-field{margin-left:0}.agenda-date-field input{height:52px}.week-agenda{overflow:auto;border:1px solid var(--line);border-radius:22px;background:#fffefb}.week-grid{display:grid;grid-template-columns:76px repeat(5,minmax(152px,1fr));min-width:880px}.week-head,.hour-head,.slot{border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);min-height:58px}.week-head{position:sticky;top:0;z-index:1;background:#fffaf1;padding:12px;text-align:center;font-weight:900;color:var(--ink)}.week-head span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.hour-head{display:grid;place-items:center;background:#fbf5e9;color:var(--gold-dark);font-weight:900;font-size:13px}.slot{padding:7px;background:#fff;cursor:pointer}.slot:hover{background:#fffaf1}.slot.busy{background:linear-gradient(135deg,#f5e6aa,#d5b250 58%,#a98233);color:#fff;border-color:#d8bd70}.slot.busy strong{display:block;font-size:13px;line-height:1.2;color:#fff}.slot.busy span{display:block;font-size:11px;margin-top:4px;color:#fff8df}.slot-empty{height:100%;min-height:44px;border:1px dashed #eadfca;border-radius:13px;background:#fffefb}.slot-panel{border:1px solid var(--line);border-radius:22px;background:#fffaf1;padding:18px;margin-top:14px}.slot-panel h3{font-family:'Cormorant Garamond',serif;font-size:30px;margin:0 0 12px}.appointment{display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:17px;align-items:center;padding:17px;border:1px solid var(--line);border-radius:22px;background:#fffefb}.time{font-family:'Cormorant Garamond',serif;font-size:25px;color:var(--gold-dark);font-weight:700;line-height:1.05;text-align:center;background:#fbf5e9;border:1px solid var(--line);border-radius:17px;padding:12px 8px;min-width:112px;white-space:normal;overflow-wrap:anywhere}.appointment strong{font-size:16px;display:block;line-height:1.2}.appointment p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.status{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap;border:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}.status.ok{background:var(--green-bg);color:var(--green);border-color:#cfebd4}.status.wait{background:#fff7e7;color:#9a7526;border-color:#ebd9a4}.status.danger{background:var(--red-bg);color:var(--red);border-color:#f0d0c2}.status.blue{background:var(--blue-bg);color:var(--blue);border-color:#d5edf3}
+.timeline{display:grid;gap:13px}.week-agenda{overflow:auto;border:1px solid var(--line);border-radius:22px;background:#fffefb}.week-grid{display:grid;grid-template-columns:76px repeat(6,minmax(146px,1fr));min-width:990px}.week-head,.hour-head,.slot{border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);min-height:58px}.week-head{position:sticky;top:0;z-index:1;background:#fffaf1;padding:12px;text-align:center;font-weight:900;color:var(--ink)}.week-head span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.hour-head{display:grid;place-items:center;background:#fbf5e9;color:var(--gold-dark);font-weight:900;font-size:13px}.slot{padding:7px;background:#fff;cursor:pointer}.slot:hover{background:#fffaf1}.slot.busy{background:linear-gradient(135deg,#f5e6aa,#d5b250 58%,#a98233);color:#fff;border-color:#d8bd70}.slot.busy strong{display:block;font-size:13px;line-height:1.2;color:#fff}.slot.busy span{display:block;font-size:11px;margin-top:4px;color:#fff8df}.slot-empty{height:100%;min-height:44px;border:1px dashed #eadfca;border-radius:13px;background:#fffefb}.slot-panel{border:1px solid var(--line);border-radius:22px;background:#fffaf1;padding:18px;margin-top:14px}.slot-panel h3{font-family:'Cormorant Garamond',serif;font-size:30px;margin:0 0 12px}.appointment{display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:17px;align-items:center;padding:17px;border:1px solid var(--line);border-radius:22px;background:#fffefb}.time{font-family:'Cormorant Garamond',serif;font-size:25px;color:var(--gold-dark);font-weight:700;line-height:1.05;text-align:center;background:#fbf5e9;border:1px solid var(--line);border-radius:17px;padding:12px 8px;min-width:112px;white-space:normal;overflow-wrap:anywhere}.appointment strong{font-size:16px;display:block;line-height:1.2}.appointment p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.status{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap;border:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}.status.ok{background:var(--green-bg);color:var(--green);border-color:#cfebd4}.status.wait{background:#fff7e7;color:#9a7526;border-color:#ebd9a4}.status.danger{background:var(--red-bg);color:var(--red);border-color:#f0d0c2}.status.blue{background:var(--blue-bg);color:var(--blue);border-color:#d5edf3}
 
 /* Forms */
 .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--muted);margin:0 0 8px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:15px;background:#fffefb;color:var(--ink);padding:13px 14px;min-height:48px}.field textarea{min-height:112px;resize:vertical;line-height:1.55}.field input::placeholder,.field textarea::placeholder{color:#aa9a81}.search-row{display:grid;grid-template-columns:1.2fr .8fr auto;gap:14px;align-items:end;margin-bottom:18px}.switch{width:54px;height:30px;border-radius:999px;padding:3px;background:var(--grad-gold);display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto}.switch.off{background:#ddd3c4;justify-content:flex-start}.switch i{width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15)}.config-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.config-tab{padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:#fffefb;color:var(--muted);font-weight:900;font-size:13px}.config-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.config-panel{display:none}.config-panel.active{display:block}.procedure-editor{display:grid;gap:12px}.procedure-item{display:grid;grid-template-columns:1.2fr .8fr .65fr .7fr auto;gap:11px;align-items:end;padding:14px;border:1px solid var(--line);border-radius:18px;background:#fffefb}.procedure-item .field label{font-size:10px;margin-bottom:6px}.procedure-item input,.procedure-item select{min-height:42px;padding:10px 12px;border-radius:13px}
@@ -222,7 +222,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
   .topbar{align-items:flex-start;flex-wrap:wrap}.brand{min-width:250px}.brand-name{font-size:19px}.nav-wrap{order:3;flex-basis:100%;justify-content:flex-start;overflow:auto;padding-top:2px}.grid.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.two,.grid.equal,.decision-strip{grid-template-columns:1fr}.procedure-item{grid-template-columns:1fr 1fr}.procedure-item .btn{grid-column:1/-1}.search-row{grid-template-columns:1fr 1fr}.search-row .btn{grid-column:1/-1}.mini-metrics{grid-template-columns:1fr 1fr 1fr}
 }
 @media(max-width:720px){
-  .app-shell{padding:14px 12px 56px}.topbar{top:8px;border-radius:22px;padding:12px}.brand{min-width:0}.brand-name{font-size:16px;letter-spacing:.18em}.brand-sub{display:none}.mark{width:46px;height:46px}.nav{gap:5px}.nav-btn{padding:10px 12px;font-size:12.5px}.menu-toggle{display:none}.page-head{align-items:flex-start;flex-direction:column;margin-bottom:24px}h1{font-size:47px}.page-head p{font-size:15px}.grid.kpis,.grid.three,.form-grid,.form-grid.three,.search-row,.mini-metrics,.attachment-grid,.agenda-toolbar{grid-template-columns:1fr}.card-head{padding:20px;flex-direction:column}.card-body{padding:20px}.patient-row,.appointment{grid-template-columns:1fr;text-align:left}.time{min-width:0;width:100%;font-size:27px}.patient-row .avatar{display:none}.row-actions{flex-direction:row;min-width:0;flex-wrap:wrap}.row-actions .btn{flex:1}.progress-row{grid-template-columns:1fr;gap:7px}.progress-row span:last-child{text-align:left}.modal-backdrop{align-items:flex-end;padding:0}.modal{width:100vw;max-height:94vh;border-radius:26px 26px 0 0}.modal-footer{position:sticky;bottom:0;flex-wrap:wrap}.modal-footer .btn{flex:1}.drawer{width:96vw}.avatar-btn{width:46px;height:46px}.actions{margin-left:auto}.brand div:nth-child(2){min-width:0}.header-tools{justify-content:flex-start}.procedure-item{grid-template-columns:1fr}
+  .app-shell{padding:14px 12px 56px}.topbar{top:8px;border-radius:22px;padding:12px}.brand{min-width:0}.brand-name{font-size:16px;letter-spacing:.18em}.brand-sub{display:none}.mark{width:46px;height:46px}.nav{gap:5px}.nav-btn{padding:10px 12px;font-size:12.5px}.menu-toggle{display:none}.page-head{align-items:flex-start;flex-direction:column;margin-bottom:24px}h1{font-size:47px}.page-head p{font-size:15px}.grid.kpis,.grid.three,.form-grid,.form-grid.three,.search-row,.mini-metrics,.attachment-grid{grid-template-columns:1fr}.card-head{padding:20px;flex-direction:column}.card-body{padding:20px}.patient-row,.appointment{grid-template-columns:1fr;text-align:left}.time{min-width:0;width:100%;font-size:27px}.patient-row .avatar{display:none}.row-actions{flex-direction:row;min-width:0;flex-wrap:wrap}.row-actions .btn{flex:1}.progress-row{grid-template-columns:1fr;gap:7px}.progress-row span:last-child{text-align:left}.modal-backdrop{align-items:flex-end;padding:0}.modal{width:100vw;max-height:94vh;border-radius:26px 26px 0 0}.modal-footer{position:sticky;bottom:0;flex-wrap:wrap}.modal-footer .btn{flex:1}.drawer{width:96vw}.avatar-btn{width:46px;height:46px}.actions{margin-left:auto}.brand div:nth-child(2){min-width:0}.header-tools{justify-content:flex-start}.procedure-item{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -240,7 +240,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
     <div class="nav-wrap">
       <nav class="nav" aria-label="Navegação principal">
         <button class="nav-btn active" data-view="overview" onclick="go('overview')">Visão</button>
-        <button class="nav-btn" data-view="agenda" onclick="go('agenda')">Agenda de hoje</button>
+        <button class="nav-btn" data-view="agenda" onclick="go('agenda')">Agenda</button>
         <button class="nav-btn" data-view="returns" onclick="go('returns')">Retornos</button>
         <button class="nav-btn" data-view="patients" onclick="go('patients')">Pacientes</button>
         <button class="nav-btn" data-view="reports" onclick="go('reports')">Relatórios</button>
@@ -298,16 +298,8 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
 
     <section id="agenda" class="page">
       <div class="page-head">
-        <div><div class="eyebrow">rotina da clínica</div><h1>Agenda</h1><p>Dia, semana e mês em uma tela única: horário, paciente, status, pendência, ficha e WhatsApp.</p></div>
+        <div><div class="eyebrow">rotina da clínica</div><h1>Agenda</h1><p>Semana automática de segunda a sábado: horário, paciente, status, ficha, valor, pagamento e WhatsApp.</p></div>
         <div class="header-tools"><button class="btn" onclick="toggleAgendaForm(true)">Novo agendamento</button><button class="btn secondary" onclick="exportAgendaDay()">Exportar dia</button></div>
-      </div>
-      <div class="agenda-toolbar">
-        <div class="agenda-mode-group">
-          <button class="config-tab active" data-agenda-mode="day" onclick="setAgendaMode('day',this)">Dia</button>
-          <button class="config-tab" data-agenda-mode="week" onclick="setAgendaMode('week',this)">Semana</button>
-          <button class="config-tab" data-agenda-mode="month" onclick="setAgendaMode('month',this)">Mês</button>
-        </div>
-        <div class="field agenda-date-field"><label>Data de referência</label><input id="agendaDate" type="text" inputmode="numeric" maxlength="8" placeholder="dd/mm/aa" onchange="normalizeAgendaDateInput(this);renderLists()"></div>
       </div>
       <section class="card" id="agendaFormCard" style="display:none;margin-bottom:22px">
         <div class="card-head"><div><h2>Novo agendamento</h2><p>Cadastro rápido para a agenda de hoje.</p></div></div>
@@ -321,18 +313,10 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
           <div style="grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button class="btn secondary" onclick="toggleAgendaForm(false)">Cancelar</button><button class="btn" onclick="saveAppointment()">Salvar agendamento</button></div>
         </div>
       </section>
-      <div class="grid equal">
-        <section class="card">
-            <div class="card-head"><div><h2 id="agendaTitle">Timeline do dia</h2><p id="agendaSubtitle">Fluxo com confirmação e ação rápida.</p></div></div>
-          <div class="card-body timeline" id="agendaList"></div>
-        </section>
-        <section class="grid">
-          <article class="card">
-            <div class="card-head"><div><h2>Resumo operacional</h2><p>O que a equipe precisa resolver.</p></div></div>
-            <div class="card-body grid"><p style="color:var(--muted);margin:0">Nenhum agendamento lançado hoje.</p></div>
-          </article>
-        </section>
-      </div>
+      <section class="card">
+        <div class="card-head"><div><h2 id="agendaTitle">Agenda da semana</h2><p id="agendaSubtitle">Fluxo com confirmação e ação rápida.</p></div></div>
+        <div class="card-body timeline" id="agendaList"></div>
+      </section>
     </section>
 
     <section id="returns" class="page">
@@ -405,7 +389,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
       </section>
       <section class="config-panel" id="cfg-procedures"><article class="card"><div class="card-head"><div><h2>Procedimentos editáveis</h2><p>Nome, categoria, intervalo, valor e status podem ser alterados sem código.</p></div><button class="btn small">Adicionar</button></div><div class="card-body procedure-editor" id="procedureEditor"></div></article></section>
       <section class="config-panel" id="cfg-messages"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Mensagem padrão</h2><p>Texto que abre no WhatsApp.</p></div></div><div class="card-body"><div class="field"><label>Mensagem geral</label><textarea>Olá, {primeiro_nome}! Aqui é da clínica Roselli Souza. Vi que já faz um tempinho desde seu procedimento de {procedimento}. Quer que eu veja um horário para você?</textarea></div></div></article><article class="card"><div class="card-head"><div><h2>Tom por perfil</h2><p>Evita mensagem robótica.</p></div></div><div class="card-body"><div class="toggle-row"><div><strong>Paciente VIP</strong><span>Mais pessoal e menos promocional.</span></div><span class="switch"><i></i></span></div><div class="toggle-row"><div><strong>Retorno vencido</strong><span>Mensagem mais objetiva.</span></div><span class="switch"><i></i></span></div><div class="toggle-row"><div><strong>Atenção clínica</strong><span>Exige revisão da Roselli antes do envio.</span></div><span class="switch"><i></i></span></div></div></article></div></section>
-      <section class="config-panel" id="cfg-schedule"><article class="card"><div class="card-head"><div><h2>Agenda e operação</h2><p>Configurações da aba Agenda de hoje.</p></div></div><div class="card-body form-grid three"><div class="field"><label>Horário inicial</label><input type="time" value="08:00"></div><div class="field"><label>Horário final</label><input type="time" value="18:00"></div><div class="field"><label>Duração padrão</label><input value="60 minutos"></div><div class="field"><label>Confirmação</label><select><option>Manual pela secretária</option><option>Automática futura</option></select></div><div class="field"><label>Encaixe</label><select><option>Permitido com autorização</option><option>Bloqueado</option></select></div><div class="field"><label>Lembrete</label><input value="1 dia antes"></div></div></article></section>
+      <section class="config-panel" id="cfg-schedule"><article class="card"><div class="card-head"><div><h2>Agenda e operação</h2><p>Configurações da aba Agenda.</p></div></div><div class="card-body form-grid three"><div class="field"><label>Horário inicial</label><input type="time" value="08:00"></div><div class="field"><label>Horário final</label><input type="time" value="18:00"></div><div class="field"><label>Duração padrão</label><input value="60 minutos"></div><div class="field"><label>Confirmação</label><select><option>Manual pela secretária</option><option>Automática futura</option></select></div><div class="field"><label>Encaixe</label><select><option>Permitido com autorização</option><option>Bloqueado</option></select></div><div class="field"><label>Lembrete</label><input value="1 dia antes"></div></div></article></section>
       <section class="config-panel" id="cfg-users"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Usuários</h2><p>Perfis de acesso.</p></div><button class="btn small">Adicionar</button></div><div class="card-body"><div class="toggle-row"><div><strong>Dra. Roselli</strong><span>Admin, edição total, financeiro visível.</span></div><span class="status ok">ativa</span></div><div class="toggle-row"><div><strong>Secretária</strong><span>Operação, contatos e agenda. Sem financeiro por padrão.</span></div><span class="status ok">ativa</span></div></div></article><article class="card"><div class="card-head"><div><h2>Permissões</h2><p>Controle fino por perfil.</p></div></div><div class="card-body"><div class="toggle-row"><div><strong>Secretária vê financeiro</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Secretária exclui paciente</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Roselli edita tudo</strong><span>Obrigatório.</span></div><span class="switch"><i></i></span></div></div></article></div></section>
       <section class="config-panel" id="cfg-security"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Segurança</h2><p>Acesso e proteção de dados.</p></div></div><div class="card-body form-grid"><div class="field"><label>Usuário admin</label><input value="dra.roselli"></div><div class="field"><label>Alterar senha</label><input type="password" placeholder="Nova senha"></div><div class="field"><label>Bloqueio</label><select><option>30 minutos</option><option>1 hora</option></select></div><div class="field"><label>Auditoria</label><select><option>Ativa</option><option>Desativada</option></select></div></div></article><article class="card"><div class="card-head"><div><h2>Backup e dados</h2><p>Preparado para LGPD e operação segura.</p></div></div><div class="card-body grid"><button class="btn secondary" onclick="configureSheetsSync()">Configurar Sheets</button><button class="btn secondary" onclick="syncSheetsNow()">Sincronizar agora</button><button class="btn secondary" onclick="exportPatientsCsv()">Exportar pacientes</button><button class="btn secondary" onclick="exportHistoryCsv()">Exportar histórico</button><button class="btn secondary" onclick="exportLocalBackup()">Gerar backup</button><button class="btn red" onclick="clearLocalMemory()">Limpar memória local</button></div></article></div></section>
     </section>
@@ -662,7 +646,7 @@ function persistAgendaMemory(){
   localStorage.setItem(CRM_AGENDA_KEY,JSON.stringify(agenda));
 }
 const agenda = loadAgendaMemory();
-let agendaMode='day';
+let agendaRenderedDate='';
 const procedures = [];
 function go(view){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -840,9 +824,9 @@ function weekDays(){
   var base=parseISODate(selectedAgendaDate())||new Date();
   var monday=new Date(base);
   monday.setDate(base.getDate()-((base.getDay()+6)%7));
-  return [0,1,2,3,4].map(function(offset){
+  return [0,1,2,3,4,5].map(function(offset){
     var d=new Date(monday); d.setDate(monday.getDate()+offset);
-    return {iso:dateToISO(d),label:['Segunda','Terça','Quarta','Quinta','Sexta'][offset],short:formatDateBR(dateToISO(d))};
+    return {iso:dateToISO(d),label:['Segunda','Terça','Quarta','Quinta','Sexta','Sábado'][offset],short:formatDateBR(dateToISO(d))};
   });
 }
 function agendaHours(){
@@ -973,7 +957,7 @@ function formatDateBR(iso){
   return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getFullYear()).slice(-2);
 }
 function formatAgendaDateTime(a){
-  return agendaMode==='day' ? (a.time||'--:--') : formatDateBR(a.date)+' '+(a.time||'--:--');
+  return formatDateBR(a.date)+' '+(a.time||'--:--');
 }
 function normalizeAppointment(a){
   a=a||{};
@@ -993,9 +977,7 @@ function normalizeAppointment(a){
   };
 }
 function selectedAgendaDate(){
-  var input=document.getElementById('agendaDate');
-  if(input && !input.value) input.value=formatDateBR(todayISO());
-  return parseAgendaDate(input&&input.value)||todayISO();
+  return todayISO();
 }
 function normalizeAgendaDateInput(input){
   var iso=parseAgendaDate(input&&input.value);
@@ -1004,14 +986,9 @@ function normalizeAgendaDateInput(input){
 function rangeForAgenda(){
   var base=parseISODate(selectedAgendaDate())||new Date();
   var start=new Date(base), end=new Date(base);
-  if(agendaMode==='week'){
-    var day=(base.getDay()+6)%7;
-    start.setDate(base.getDate()-day);
-    end=new Date(start); end.setDate(start.getDate()+6);
-  }else if(agendaMode==='month'){
-    start=new Date(base.getFullYear(),base.getMonth(),1);
-    end=new Date(base.getFullYear(),base.getMonth()+1,0);
-  }
+  var day=(base.getDay()+6)%7;
+  start.setDate(base.getDate()-day);
+  end=new Date(start); end.setDate(start.getDate()+5);
   return {start:dateToISO(start),end:dateToISO(end)};
 }
 function getAgendaFiltered(){
@@ -1024,12 +1001,10 @@ function updateAgendaHeader(items){
   var title=document.getElementById('agendaTitle');
   var subtitle=document.getElementById('agendaSubtitle');
   var range=rangeForAgenda();
-  if(title) title.textContent=agendaMode==='day'?'Agenda do dia':agendaMode==='week'?'Agenda da semana':'Agenda do mês';
+  if(title) title.textContent='Agenda da semana';
   if(subtitle) subtitle.textContent=formatDateBR(range.start)+(range.end!==range.start?' até '+formatDateBR(range.end):'')+' • '+items.length+' agendamento(s)';
 }
 function setAgendaMode(mode,btn){
-  agendaMode=mode||'day';
-  document.querySelectorAll('[data-agenda-mode]').forEach(function(b){b.classList.toggle('active',b===btn || b.dataset.agendaMode===agendaMode);});
   renderLists();
 }
 function fillAgendaPatients(){
@@ -1204,6 +1179,14 @@ function saveMock(){persistLocalMemory();scheduleSheetsSync(1500);toast('Altera�
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){toggleDrawer(false);document.getElementById('modalBackdrop').classList.remove('open');document.body.classList.remove('modal-open')}});
 renderLists();
 initSheetsSync();
+agendaRenderedDate=todayISO();
+setInterval(function(){
+  var current=todayISO();
+  if(current!==agendaRenderedDate){
+    agendaRenderedDate=current;
+    renderLists();
+  }
+},60000);
 </script>
 </body>
 </html>
