@@ -207,7 +207,8 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
 .progress-list{display:grid;gap:16px}.progress-row{display:grid;grid-template-columns:136px 1fr 56px;gap:16px;align-items:center;font-weight:800}.progress-row span:first-child{font-size:13.5px}.progress-row span:last-child{text-align:right;color:var(--gold-dark);font-size:14px}.bar{height:10px;border-radius:999px;background:#efe6d5;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px;background:var(--grad-gold)}
 
 /* Agenda */
-.timeline{display:grid;gap:13px}.week-agenda{overflow:auto;border:1px solid var(--line);border-radius:22px;background:#fffefb}.week-grid{display:grid;grid-template-columns:76px repeat(6,minmax(146px,1fr));min-width:990px}.week-head,.hour-head,.slot{border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);min-height:58px}.week-head{position:sticky;top:0;z-index:1;background:#fffaf1;padding:12px;text-align:center;font-weight:900;color:var(--ink)}.week-head span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.hour-head{display:grid;place-items:center;background:#fbf5e9;color:var(--gold-dark);font-weight:900;font-size:13px}.slot{padding:7px;background:#fff;cursor:pointer}.slot:hover{background:#fffaf1}.slot.busy{background:linear-gradient(135deg,#f5e6aa,#d5b250 58%,#a98233);color:#fff;border-color:#d8bd70}.slot.busy strong{display:block;font-size:13px;line-height:1.2;color:#fff}.slot.busy span{display:block;font-size:11px;margin-top:4px;color:#fff8df}.slot-empty{height:100%;min-height:44px;border:1px dashed #eadfca;border-radius:13px;background:#fffefb}.slot-backdrop{position:fixed;inset:0;z-index:130;background:rgba(56,47,34,.35);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:22px}.slot-panel{position:relative;width:min(860px,96vw);max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:24px;background:#fffaf1;padding:22px;box-shadow:0 30px 100px -50px rgba(56,47,34,.82)}.slot-close{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fffefb;color:var(--ink);font-size:22px;line-height:1;cursor:pointer}.slot-panel h3{font-family:'Cormorant Garamond',serif;font-size:30px;margin:0 48px 12px 0}.slot-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}.slot-summary div{border:1px solid var(--line);border-radius:16px;background:#fffefb;padding:12px}.slot-summary span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:var(--muted);margin-bottom:5px}.slot-summary strong{display:block;font-size:14px;line-height:1.25;overflow-wrap:anywhere}.appointment{display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:17px;align-items:center;padding:17px;border:1px solid var(--line);border-radius:22px;background:#fffefb}.time{font-family:'Cormorant Garamond',serif;font-size:25px;color:var(--gold-dark);font-weight:700;line-height:1.05;text-align:center;background:#fbf5e9;border:1px solid var(--line);border-radius:17px;padding:12px 8px;min-width:112px;white-space:normal;overflow-wrap:anywhere}.appointment strong{font-size:16px;display:block;line-height:1.2}.appointment p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.status{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap;border:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}.status.ok{background:var(--green-bg);color:var(--green);border-color:#cfebd4}.status.wait{background:#fff7e7;color:#9a7526;border-color:#ebd9a4}.status.danger{background:var(--red-bg);color:var(--red);border-color:#f0d0c2}.status.blue{background:var(--blue-bg);color:var(--blue);border-color:#d5edf3}
+.timeline{display:grid;gap:13px}.agenda-controls{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}.agenda-control-group{display:flex;gap:8px;flex-wrap:wrap}.agenda-toggle{min-height:42px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#fffefb;color:var(--ink);font-weight:900;font-size:14px;cursor:pointer}.agenda-toggle.active{background:var(--ink);color:#fff;border-color:var(--ink)}.week-agenda{overflow:auto;border:1px solid var(--line);border-radius:22px;background:#fffefb}.week-grid{display:grid;grid-template-columns:88px repeat(var(--agenda-days,6),minmax(162px,1fr));min-width:calc(88px + (var(--agenda-days,6) * 162px))}.week-head,.hour-head,.slot{border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);min-height:62px}.week-head{position:sticky;top:0;z-index:1;background:#fffaf1;padding:13px 10px;text-align:center;font-weight:950;color:var(--ink);font-size:18px}.week-head span{display:block;color:#5b5041;font-size:13px;margin-top:5px}.hour-head{display:grid;place-items:center;background:#fbf5e9;color:#4a3b24;font-weight:950;font-size:16px}.slot{padding:7px;background:#fff;cursor:pointer}.slot:hover{background:#fffaf1}.slot.busy{background:linear-gradient(135deg,#f8e7a4,#d8b64f 60%,#b68b34);color:#17120b;border-color:#caa84d}.slot.busy strong{display:block;font-size:15px;line-height:1.2;color:#17120b;font-weight:950}.slot.busy span{display:block;font-size:13px;margin-top:4px;color:#241b0d;font-weight:800}.slot-empty{height:100%;min-height:46px;border:1px dashed #eadfca;border-radius:13px;background:#fffefb}.slot-backdrop{position:fixed;inset:0;z-index:130;background:rgba(56,47,34,.35);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:22px}.slot-panel{position:relative;width:min(860px,96vw);max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:24px;background:#fffaf1;padding:22px;box-shadow:0 30px 100px -50px rgba(56,47,34,.82)}.slot-close{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fffefb;color:var(--ink);font-size:22px;line-height:1;cursor:pointer}.slot-panel h3{font-family:'Cormorant Garamond',serif;font-size:30px;margin:0 48px 12px 0}.slot-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}.slot-summary div{border:1px solid var(--line);border-radius:16px;background:#fffefb;padding:12px}.slot-summary span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:var(--muted);margin-bottom:5px}.slot-summary strong{display:block;font-size:14px;line-height:1.25;overflow-wrap:anywhere}.appointment{display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:17px;align-items:center;padding:17px;border:1px solid var(--line);border-radius:22px;background:#fffefb}.time{font-family:'Cormorant Garamond',serif;font-size:25px;color:var(--gold-dark);font-weight:700;line-height:1.05;text-align:center;background:#fbf5e9;border:1px solid var(--line);border-radius:17px;padding:12px 8px;min-width:112px;white-space:normal;overflow-wrap:anywhere}.appointment strong{font-size:16px;display:block;line-height:1.2}.appointment p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.status{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap;border:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}.status.ok{background:var(--green-bg);color:var(--green);border-color:#cfebd4}.status.wait{background:#fff7e7;color:#9a7526;border-color:#ebd9a4}.status.danger{background:var(--red-bg);color:var(--red);border-color:#f0d0c2}.status.blue{background:var(--blue-bg);color:var(--blue);border-color:#d5edf3}
+.month-grid{display:grid;grid-template-columns:repeat(7,minmax(132px,1fr));min-width:924px}.month-day{min-height:132px;border-right:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);padding:12px;background:#fffefb}.month-day strong{display:block;font-size:18px;color:var(--ink)}.month-day span{display:block;font-size:12px;color:#5b5041;font-weight:900;margin-top:3px}.month-items{display:grid;gap:6px;margin-top:10px}.month-item,.month-empty{border:1px solid #d9c384;border-radius:12px;background:#f4dd88;color:#17120b;font-weight:900;padding:8px;text-align:left;cursor:pointer}.month-empty{background:#fff;border-style:dashed;text-align:center;color:var(--gold-dark)}
 
 /* Forms */
 .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--muted);margin:0 0 8px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:15px;background:#fffefb;color:var(--ink);padding:13px 14px;min-height:48px}.field textarea{min-height:112px;resize:vertical;line-height:1.55}.field input::placeholder,.field textarea::placeholder{color:#aa9a81}.search-row{display:grid;grid-template-columns:1.2fr .8fr auto;gap:14px;align-items:end;margin-bottom:18px}.switch{width:54px;height:30px;border-radius:999px;padding:3px;background:var(--grad-gold);display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto}.switch.off{background:#ddd3c4;justify-content:flex-start}.switch i{width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15)}.config-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.config-tab{padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:#fffefb;color:var(--muted);font-weight:900;font-size:13px}.config-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.config-panel{display:none}.config-panel.active{display:block}.procedure-editor{display:grid;gap:12px}.procedure-item{display:grid;grid-template-columns:1.2fr .8fr .65fr .7fr auto;gap:11px;align-items:end;padding:14px;border:1px solid var(--line);border-radius:18px;background:#fffefb}.procedure-item .field label{font-size:10px;margin-bottom:6px}.procedure-item input,.procedure-item select{min-height:42px;padding:10px 12px;border-radius:13px}
@@ -300,6 +301,17 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
       <div class="page-head">
         <div><div class="eyebrow">rotina da clínica</div><h1>Agenda</h1><p>Clique em um horário vago para agendar; clique em um horário ocupado para ver, remarcar ou cancelar.</p></div>
         <div class="header-tools"><button class="btn secondary" onclick="exportAgendaDay()">Exportar agenda</button></div>
+      </div>
+      <div class="agenda-controls">
+        <div class="agenda-control-group" aria-label="Visualização da agenda">
+          <button class="agenda-toggle" data-agenda-mode="day" onclick="setAgendaMode('day')">Dia</button>
+          <button class="agenda-toggle active" data-agenda-mode="week" onclick="setAgendaMode('week')">Semana</button>
+          <button class="agenda-toggle" data-agenda-mode="month" onclick="setAgendaMode('month')">Mês</button>
+        </div>
+        <div class="agenda-control-group" aria-label="Intervalo dos horários">
+          <button class="agenda-toggle" data-agenda-step="30" onclick="setAgendaStep(30)">30 min</button>
+          <button class="agenda-toggle active" data-agenda-step="60" onclick="setAgendaStep(60)">1 hora</button>
+        </div>
       </div>
       <section class="card">
         <div class="card-head"><div><h2 id="agendaTitle">Agenda da semana</h2><p id="agendaSubtitle">Fluxo com confirmação e ação rápida.</p></div></div>
@@ -635,6 +647,8 @@ function persistAgendaMemory(){
 }
 const agenda = loadAgendaMemory();
 let agendaRenderedDate='';
+let agendaMode='week';
+let agendaStep=60;
 const procedures = [];
 function go(view){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -672,7 +686,7 @@ function renderLists(){
   var agendaEl=document.getElementById('agendaList');
   var agendaFiltered=getAgendaFiltered();
   updateAgendaHeader(agendaFiltered);
-  if(agendaEl) agendaEl.innerHTML=renderWeekAgenda();
+  if(agendaEl) agendaEl.innerHTML=agendaMode==='month'?renderMonthAgenda():renderWeekAgenda();
   fillAgendaPatients();
   fillProcStats();fillKpis();fillFilters();renderPatientList();
   const proc=document.getElementById('procedureEditor');
@@ -812,14 +826,18 @@ function weekDays(){
   var base=parseISODate(selectedAgendaDate())||new Date();
   var monday=new Date(base);
   monday.setDate(base.getDate()-((base.getDay()+6)%7));
-  return [0,1,2,3,4,5].map(function(offset){
+  var offsets=agendaMode==='day'?[((base.getDay()+6)%7)]:[0,1,2,3,4,5];
+  return offsets.map(function(offset){
     var d=new Date(monday); d.setDate(monday.getDate()+offset);
-    return {iso:dateToISO(d),label:['Segunda','Terça','Quarta','Quinta','Sexta','Sábado'][offset],short:formatDateBR(dateToISO(d))};
+    return {iso:dateToISO(d),label:['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'][offset]||'Dia',short:formatDateBR(dateToISO(d))};
   });
 }
 function agendaHours(){
   var out=[];
-  for(var h=6;h<=21;h++) out.push(String(h).padStart(2,'0')+':00');
+  for(var h=6;h<=21;h++){
+    out.push(String(h).padStart(2,'0')+':00');
+    if(agendaStep===30 && h<21) out.push(String(h).padStart(2,'0')+':30');
+  }
   return out;
 }
 function appointmentAt(date,time){
@@ -833,19 +851,43 @@ function appointmentAt(date,time){
 function renderWeekAgenda(){
   var days=weekDays();
   var hours=agendaHours();
-  var html='<div class="week-agenda"><div class="week-grid"><div class="week-head">Horário</div>';
+  var html='<div class="week-agenda" style="--agenda-days:'+days.length+'"><div class="week-grid"><div class="week-head">Horário</div>';
   html+=days.map(function(d){return '<div class="week-head">'+d.label+'<span>'+d.short+'</span></div>';}).join('');
   hours.forEach(function(hour){
     html+='<div class="hour-head">'+hour+'</div>';
     days.forEach(function(day){
       var found=appointmentAt(day.iso,hour);
       if(found){
-        html+=`<button class="slot busy" onclick="openSlotPanel('${day.iso}','${hour}',${found.index})"><strong>${escH(found.item.name||'Paciente')}</strong><span>${escH(found.item.desc||'Agendamento')}</span><span>${escH(formatMoney(found.item.value))} • ${escH(found.item.paymentMethod||'forma não definida')}</span></button>`;
+        html+=`<button class="slot busy" onclick="openSlotPanel('${day.iso}','${hour}',${found.index})"><strong>${escH(found.item.name||'Paciente')}</strong><span>${escH(found.item.desc||'Agendamento')}</span><span>${escH(formatMoney(found.item.value))} • ${escH(found.item.paymentMethod||'forma não definida')} • ${escH((found.item.duration||60)+' min')}</span></button>`;
       }else{
         html+=`<button class="slot" onclick="openSlotPanel('${day.iso}','${hour}',null)"><div class="slot-empty"></div></button>`;
       }
     });
   });
+  html+='</div></div><div id="slotPanel"></div>';
+  return html;
+}
+function renderMonthAgenda(){
+  var range=rangeForAgenda();
+  var rows=getAgendaFiltered();
+  var grouped={};
+  rows.forEach(function(row){
+    var a=row.item;
+    if(!grouped[a.date]) grouped[a.date]=[];
+    grouped[a.date].push(row);
+  });
+  var start=parseISODate(range.start), end=parseISODate(range.end);
+  var html='<div class="week-agenda"><div class="month-grid">';
+  for(var d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
+    var iso=dateToISO(d), list=grouped[iso]||[];
+    html+='<article class="month-day"><strong>'+formatDateBR(iso)+'</strong><span>'+['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][d.getDay()]+'</span>';
+    if(list.length){
+      html+='<div class="month-items">'+list.map(function(row){var a=row.item;return `<button class="month-item" onclick="openSlotPanel('${a.date}','${a.time}',${row.index})">${escH(a.time)} • ${escH(a.name||'Paciente')}</button>`;}).join('')+'</div>';
+    }else{
+      html+=`<button class="month-empty" onclick="openSlotPanel('${iso}','06:00',null)">+</button>`;
+    }
+    html+='</article>';
+  }
   html+='</div></div><div id="slotPanel"></div>';
   return html;
 }
@@ -871,7 +913,7 @@ function openSlotPanel(date,time,index){
         '<div><span>Paciente</span><strong>'+escH(a.name||'Paciente')+'</strong></div>'+
         '<div><span>Procedimento</span><strong>'+escH(a.desc||'Agendamento')+'</strong></div>'+
         '<div><span>Valor</span><strong>'+escH(formatMoney(a.value))+'</strong></div>'+
-        '<div><span>Pagamento</span><strong>'+escH(a.paymentMethod||'Não definido')+'</strong></div>'+
+        '<div><span>Pagamento</span><strong>'+escH(a.paymentMethod||'Não definido')+' • '+escH((a.duration||60)+' min')+'</strong></div>'+
       '</div>'+
       '<details open><summary>Informações e remarcação</summary>'+
         '<div class="form-grid" style="margin-top:14px">'+
@@ -879,6 +921,7 @@ function openSlotPanel(date,time,index){
           '<div class="field"><label>Último procedimento</label><input value="'+escH(patient?lastProcedure(patient):(a.desc||''))+'" disabled></div>'+
           '<div class="field"><label>Nova data</label><input id="slotDate" type="text" inputmode="numeric" maxlength="8" value="'+formatDateBR(a.date)+'" onchange="normalizeAgendaDateInput(this)"></div>'+
           '<div class="field"><label>Novo horário</label><select id="slotTime">'+agendaHours().map(function(h){return '<option '+(h===a.time?'selected':'')+'>'+h+'</option>';}).join('')+'</select></div>'+
+          '<div class="field"><label>Duração</label><select id="slotDuration">'+durationOptions(a.duration)+'</select></div>'+
           '<div class="field"><label>Procedimento</label><input id="slotProcedure" value="'+escH(a.desc||'')+'"></div>'+
           '<div class="field"><label>Valor</label><input id="slotValue" value="'+escH(a.value||'')+'"></div>'+
           '<div class="field"><label>Pagamento</label><select id="slotPayment">'+paymentOptions(a.paymentMethod)+'</select></div>'+
@@ -903,6 +946,7 @@ function openSlotPanel(date,time,index){
       '<div class="field"><label>Pagamento</label><select id="slotPayment">'+paymentOptions(a.paymentMethod)+'</select></div>'+
       '<div class="field"><label>Data</label><input id="slotDate" type="text" inputmode="numeric" maxlength="8" value="'+formatDateBR(a.date)+'" onchange="normalizeAgendaDateInput(this)"></div>'+
       '<div class="field"><label>Horário</label><select id="slotTime">'+agendaHours().map(function(h){return '<option '+(h===a.time?'selected':'')+'>'+h+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label>Duração</label><select id="slotDuration">'+durationOptions(a.duration||agendaStep)+'</select></div>'+
     '</div>'+
     '<div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px">'+
       '<button class="btn secondary" onclick="clearSlotPanel()">Cancelar</button>'+
@@ -930,6 +974,10 @@ function cancelCurrentSlotAppointment(){
 }
 function paymentOptions(current){
   return ['Dinheiro','Pix','Débito','Crédito','Boleto','Permuta'].map(function(x){return '<option '+(x===current?'selected':'')+'>'+x+'</option>';}).join('');
+}
+function durationOptions(current){
+  var value=Number(current)||60;
+  return [30,60].map(function(x){return '<option value="'+x+'" '+(x===value?'selected':'')+'>'+(x===30?'30 minutos':'1 hora')+'</option>';}).join('');
 }
 function findPatientByName(name){
   var target=nrm(name);
@@ -964,6 +1012,7 @@ function saveSlotAppointment(index,originalDate,originalTime){
     date:date,time:time,name:name,desc:(document.getElementById('slotProcedure')||{}).value.trim(),
     value:(document.getElementById('slotValue')||{}).value.trim(),
     paymentMethod:(document.getElementById('slotPayment')||{}).value,
+    duration:Number((document.getElementById('slotDuration')||{}).value)||60,
     patientId:patient.id,whatsapp:patient.tw,tags:['Agendado']
   });
   if(index===null || typeof index!=='number') agenda.push(item); else agenda[index]=Object.assign({},agenda[index],item,{updatedAt:new Date().toISOString()});
@@ -1010,6 +1059,7 @@ function normalizeAppointment(a){
     desc:a.desc||a.procedimento_observacao||a.procedimento||'',
     value:a.value||a.valor||'',
     paymentMethod:a.paymentMethod||a.forma_pagamento||'',
+    duration:Number(a.duration||a.duracao_minutos||a.duracao||60)||60,
     tags:Array.isArray(a.tags)?a.tags:(a.status?[a.status]:['Agendado']),
     patientId:a.patientId||a.paciente_id||'',
     whatsapp:a.whatsapp||'',
@@ -1030,9 +1080,16 @@ function normalizeAgendaDateInput(input){
 function rangeForAgenda(){
   var base=parseISODate(selectedAgendaDate())||new Date();
   var start=new Date(base), end=new Date(base);
-  var day=(base.getDay()+6)%7;
-  start.setDate(base.getDate()-day);
-  end=new Date(start); end.setDate(start.getDate()+5);
+  if(agendaMode==='day'){
+    start=new Date(base); end=new Date(base);
+  }else if(agendaMode==='month'){
+    start=new Date(base.getFullYear(),base.getMonth(),1);
+    end=new Date(base.getFullYear(),base.getMonth()+1,0);
+  }else{
+    var day=(base.getDay()+6)%7;
+    start.setDate(base.getDate()-day);
+    end=new Date(start); end.setDate(start.getDate()+5);
+  }
   return {start:dateToISO(start),end:dateToISO(end)};
 }
 function getAgendaFiltered(){
@@ -1046,10 +1103,17 @@ function updateAgendaHeader(items){
   var title=document.getElementById('agendaTitle');
   var subtitle=document.getElementById('agendaSubtitle');
   var range=rangeForAgenda();
-  if(title) title.textContent='Agenda da semana';
+  if(title) title.textContent=agendaMode==='day'?'Agenda do dia':agendaMode==='month'?'Agenda do mês':'Agenda da semana';
   if(subtitle) subtitle.textContent=formatDateBR(range.start)+(range.end!==range.start?' até '+formatDateBR(range.end):'')+' • '+items.length+' agendamento(s)';
 }
 function setAgendaMode(mode,btn){
+  agendaMode=mode||'week';
+  document.querySelectorAll('[data-agenda-mode]').forEach(function(b){b.classList.toggle('active',b.dataset.agendaMode===agendaMode);});
+  renderLists();
+}
+function setAgendaStep(step){
+  agendaStep=Number(step)===30?30:60;
+  document.querySelectorAll('[data-agenda-step]').forEach(function(b){b.classList.toggle('active',Number(b.dataset.agendaStep)===agendaStep);});
   renderLists();
 }
 function fillAgendaPatients(){
