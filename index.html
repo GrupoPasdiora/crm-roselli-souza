@@ -310,7 +310,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
     <section id="returns" class="page">
       <div class="page-head">
         <div><div class="eyebrow">ação da secretária</div><h1>Retornos</h1><p>Lista prática para contato: quem chamar, por qual procedimento, quantos dias venceu, valor anterior, tentativa e próxima ação.</p></div>
-        <div class="header-tools"><button class="btn green">Enviar lote WhatsApp</button><button class="btn secondary">Filtrar</button></div>
+        <div class="header-tools"><button class="btn green" onclick="sendReturnWhatsBatch()">Enviar lote WhatsApp</button><button class="btn secondary" onclick="go('patients');setTimeout(function(){var e=document.getElementById('patientSearch');if(e)e.focus();},80)">Filtrar</button></div>
       </div>
       <section class="card">
         <div class="card-head"><div><h2>Para chamar agora</h2><p>Ordenado por atraso, valor anterior e perfil da paciente.</p></div></div>
@@ -339,7 +339,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
     <section id="reports" class="page">
       <div class="page-head">
         <div><div class="eyebrow">decisão da clínica</div><h1>Relatórios</h1><p>Menos número solto, mais decisão: receita, conversão, procedimentos que sustentam o caixa e gargalos de retorno.</p></div>
-        <div class="header-tools"><button class="btn secondary">Últimos 30 dias</button><button class="btn">Exportar relatório</button></div>
+        <div class="header-tools"><button class="btn secondary" onclick="setReportRange(30,this)">Últimos 30 dias</button><button class="btn" onclick="exportReportCsv()">Exportar relatório</button></div>
       </div>
       <div class="grid equal">
         <section class="card"><div class="card-head"><div><h2>Relatórios</h2><p>Os relatórios serão gerados a partir dos dados reais sincronizados.</p></div></div><div class="card-body"><p style="color:var(--muted);margin:0">Nenhum relatório real gerado ainda.</p></div></section>
@@ -375,10 +375,10 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
           </div></article>
         </div>
       </section>
-      <section class="config-panel" id="cfg-procedures"><article class="card"><div class="card-head"><div><h2>Procedimentos editáveis</h2><p>Nome, categoria, intervalo, valor e status podem ser alterados sem código.</p></div><button class="btn small">Adicionar</button></div><div class="card-body procedure-editor" id="procedureEditor"></div></article></section>
+      <section class="config-panel" id="cfg-procedures"><article class="card"><div class="card-head"><div><h2>Procedimentos editáveis</h2><p>Nome, categoria, intervalo, valor e status podem ser alterados sem código.</p></div><button class="btn small" onclick="toast('Use os campos abaixo para cadastrar o próximo procedimento')">Adicionar</button></div><div class="card-body procedure-editor" id="procedureEditor"></div></article></section>
       <section class="config-panel" id="cfg-messages"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Mensagem padrão</h2><p>Texto que abre no WhatsApp.</p></div></div><div class="card-body"><div class="field"><label>Mensagem geral</label><textarea>Olá, {primeiro_nome}! Aqui é da clínica Roselli Souza. Vi que já faz um tempinho desde seu procedimento de {procedimento}. Quer que eu veja um horário para você?</textarea></div></div></article><article class="card"><div class="card-head"><div><h2>Tom por perfil</h2><p>Evita mensagem robótica.</p></div></div><div class="card-body"><div class="toggle-row"><div><strong>Paciente VIP</strong><span>Mais pessoal e menos promocional.</span></div><span class="switch"><i></i></span></div><div class="toggle-row"><div><strong>Retorno vencido</strong><span>Mensagem mais objetiva.</span></div><span class="switch"><i></i></span></div><div class="toggle-row"><div><strong>Atenção clínica</strong><span>Exige revisão da Roselli antes do envio.</span></div><span class="switch"><i></i></span></div></div></article></div></section>
       <section class="config-panel" id="cfg-schedule"><article class="card"><div class="card-head"><div><h2>Agenda e operação</h2><p>Configurações da aba Agenda.</p></div></div><div class="card-body form-grid three"><div class="field"><label>Horário inicial</label><input type="time" value="08:00"></div><div class="field"><label>Horário final</label><input type="time" value="18:00"></div><div class="field"><label>Duração padrão</label><input value="60 minutos"></div><div class="field"><label>Confirmação</label><select><option>Manual pela secretária</option><option>Automática futura</option></select></div><div class="field"><label>Encaixe</label><select><option>Permitido com autorização</option><option>Bloqueado</option></select></div><div class="field"><label>Lembrete</label><input value="1 dia antes"></div></div></article></section>
-      <section class="config-panel" id="cfg-users"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Usuários</h2><p>Perfis de acesso.</p></div><button class="btn small">Adicionar</button></div><div class="card-body"><div class="toggle-row"><div><strong>Dra. Roselli</strong><span>Admin, edição total, financeiro visível.</span></div><span class="status ok">ativa</span></div><div class="toggle-row"><div><strong>Secretária</strong><span>Operação, contatos e agenda. Sem financeiro por padrão.</span></div><span class="status ok">ativa</span></div></div></article><article class="card"><div class="card-head"><div><h2>Permissões</h2><p>Controle fino por perfil.</p></div></div><div class="card-body"><div class="toggle-row"><div><strong>Secretária vê financeiro</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Secretária exclui paciente</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Roselli edita tudo</strong><span>Obrigatório.</span></div><span class="switch"><i></i></span></div></div></article></div></section>
+      <section class="config-panel" id="cfg-users"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Usuários</h2><p>Perfis de acesso.</p></div><button class="btn small" onclick="toast('Cadastro de usuário será liberado com login individual')">Adicionar</button></div><div class="card-body"><div class="toggle-row"><div><strong>Dra. Roselli</strong><span>Admin, edição total, financeiro visível.</span></div><span class="status ok">ativa</span></div><div class="toggle-row"><div><strong>Secretária</strong><span>Operação, contatos e agenda. Sem financeiro por padrão.</span></div><span class="status ok">ativa</span></div></div></article><article class="card"><div class="card-head"><div><h2>Permissões</h2><p>Controle fino por perfil.</p></div></div><div class="card-body"><div class="toggle-row"><div><strong>Secretária vê financeiro</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Secretária exclui paciente</strong><span>Recomendado desligado.</span></div><span class="switch off"><i></i></span></div><div class="toggle-row"><div><strong>Roselli edita tudo</strong><span>Obrigatório.</span></div><span class="switch"><i></i></span></div></div></article></div></section>
       <section class="config-panel" id="cfg-security"><div class="grid equal"><article class="card"><div class="card-head"><div><h2>Segurança</h2><p>Acesso e proteção de dados.</p></div></div><div class="card-body form-grid"><div class="field"><label>Usuário admin</label><input value="dra.roselli"></div><div class="field"><label>Alterar senha</label><input type="password" placeholder="Nova senha"></div><div class="field"><label>Bloqueio</label><select><option>30 minutos</option><option>1 hora</option></select></div><div class="field"><label>Auditoria</label><select><option>Ativa</option><option>Desativada</option></select></div></div></article><article class="card"><div class="card-head"><div><h2>Backup e dados</h2><p>Preparado para LGPD e operação segura.</p></div></div><div class="card-body grid"><button class="btn secondary" onclick="configureSheetsSync()">Configurar Sheets</button><button class="btn secondary" onclick="syncSheetsNow()">Sincronizar agora</button><button class="btn secondary" onclick="exportPatientsCsv()">Exportar pacientes</button><button class="btn secondary" onclick="exportHistoryCsv()">Exportar histórico</button><button class="btn secondary" onclick="exportLocalBackup()">Gerar backup</button><button class="btn red" onclick="clearLocalMemory()">Limpar memória local</button></div></article></div></section>
     </section>
   </main>
@@ -403,7 +403,7 @@ h1{font-size:clamp(48px,5.4vw,82px);font-weight:600;line-height:.88;margin:0;col
   </div>
   <div class="drawer-foot">
     <div class="secure-note">A barra principal agora fica leve: rotina da clínica na frente, administração guardada no Menu.</div>
-    <button class="btn red" style="width:100%;margin-top:14px">Sair do CRM</button>
+    <button class="btn red" style="width:100%;margin-top:14px" onclick="toggleDrawer(false);toast('CRM fechado com segurança neste navegador')">Sair do CRM</button>
   </div>
 </aside>
 
@@ -1062,6 +1062,33 @@ function exportAgendaDay(){
   getAgendaFiltered().forEach(function(row){var a=row.item;rows.push([a.date+' '+(a.time||''),a.name||'',a.desc||'',(a.tags||[]).join(', ')]);});
   downloadTextFile('agenda-crm-roselli.csv',rows.map(function(r){return r.map(csvEscape).join(';');}).join('\n'),'text/csv;charset=utf-8');
   toast('Agenda exportada');
+}
+function setReportRange(days,btn){
+  document.querySelectorAll('#reports .header-tools .btn').forEach(function(b){b.classList.remove('dark');});
+  if(btn) btn.classList.add('dark');
+  toast('Relatório ajustado para '+days+' dias');
+}
+function exportReportCsv(){
+  refreshTotals();
+  var rows=[
+    ['indicador','valor'],
+    ['pacientes',PP.totals.pacientes],
+    ['pacientes_com_telefone',PP.totals.com_tel],
+    ['procedimentos',PP.totals.procedimentos],
+    ['agendamentos_semana',getAgendaFiltered().length]
+  ];
+  rows.push([]);
+  rows.push(['procedimento','quantidade']);
+  (PP.topProc||[]).forEach(function(item){rows.push([item[0],item[1]]);});
+  downloadTextFile('relatorio-crm-roselli.csv',rows.map(function(r){return r.map(csvEscape).join(';');}).join('\n'),'text/csv;charset=utf-8');
+  toast('Relatório exportado');
+}
+function sendReturnWhatsBatch(){
+  var patients=(PP.recIdx||[]).map(function(i){return PP.patients[i];}).filter(function(p){return p&&p.tw;}).slice(0,5);
+  if(!patients.length){toast('Nenhuma paciente com WhatsApp na lista');return;}
+  if(!confirm('Abrir WhatsApp para '+patients.length+' paciente(s)?')) return;
+  patients.forEach(function(p,idx){setTimeout(function(){window.open(waHref(p.tw,p),'_blank');},idx*350);});
+  toast('WhatsApp aberto para lote');
 }
 function digitsOnly(value){return String(value||'').replace(/\D/g,'');}
 function initialsFromName(name){
